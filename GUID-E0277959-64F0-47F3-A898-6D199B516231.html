@@ -1,0 +1,309 @@
+
+<!DOCTYPE html
+  PUBLIC "" "about:legacy-compat">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:whc="http://www.daksys.com/webhelp/components" xml:lang="zh-cn" lang="zh-cn">
+	<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />        
+      <meta name="copyright" content="©  杭州海康威视数字技术股份有限公司。保留一切权利。" /><meta name="DC.Type" content="task" /><meta name="DC.Title" content="通讯控制" /><meta name="abstract" content="您可通过通讯控制功能配置自定义命令，利用串口、TCP或UDP协议从外部发送自定义命令至读码器，实现对读码器的灵活控制。" /><meta name="description" content="您可通过通讯控制功能配置自定义命令，利用串口、TCP或UDP协议从外部发送自定义命令至读码器，实现对读码器的灵活控制。" /><meta name="DC.Relation" scheme="URI" content="GUID-3F138232-3CF2-4E3F-A3C0-3D677CF174B5.html" /><meta name="DC.Format" content="XHTML" /><meta name="DC.Identifier" content="GUID-E0277959-64F0-47F3-A898-6D199B516231" /><meta name="DC.Language" content="zh-CN" /><title>通讯控制</title><!-- Generated with dksgen version 1.0, build number 2023071300.  --><meta viewport="Content-Type" content="width=device-width, initial-scale=1.0" /><meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" /><meta name="wh-path2root" content="index.html" />
+		<!-- commonltr css -->
+		<link rel="stylesheet" type="text/css" href="daksys-webhelp/resources/css/commonltr.css" />
+		<!-- Bootstrap css -->
+		<link rel="stylesheet" type="text/css" href="daksys-webhelp/resources/bootstrap/css/bootstrap.min.css" />
+		<link rel="stylesheet" type="text/css" href="daksys-webhelp/resources/bootstrap/css/bootstrap-theme.min.css" />
+		<link rel="stylesheet" type="text/css" href="daksys-webhelp/resources/js/jquery-ui.min.css" />
+		
+		<!-- Template css  -->
+		<link href="daksys-webhelp/template/resources/css/HIKROBOT_color.css?buildId=2023071300" rel="stylesheet" type="text/css" />
+		<link rel="stylesheet" type="text/css" href="daksys-webhelp/template/resources/css/wt_topic.css?buildId=2023071300" />
+		<link rel="stylesheet" type="text/css" href="daksys-webhelp/template/resources/css/wt_topic_m.css?buildId=2023071300" />
+		<link rel="stylesheet" type="text/css" href="daksys-webhelp/template/resources/css/wt_expand.css?buildId=2023071300" />
+		<link rel="stylesheet" type="text/css" href="daksys-webhelp/template/resources/css/wt_note.css?buildId=2023071300" />
+		<link rel="stylesheet" type="text/css" href="daksys-webhelp/template/resources/css/wt_steps.css?buildId=2023071300" />
+		
+		<!-- jquery js  -->
+		<script type="text/javascript" src="daksys-webhelp/resources/js/jquery-3.6.2.min.js"></script>
+		<script type="text/javascript" src="daksys-webhelp/resources/js/jquery.cookie.js"></script>
+		<script type="text/javascript" src="daksys-webhelp/resources/js/jquery.highlight-3.js"></script>
+		<script type="text/javascript" src="daksys-webhelp/resources/js/jquery-ui.min.js"></script>
+		
+		<!-- common js  -->
+		<script type="text/javascript" src="daksys-webhelp/resources/bootstrap/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="daksys-webhelp/resources/js/base64.js"></script>
+		<script type="text/javascript" src="daksys-webhelp/resources/js/browserDetect.js"></script>
+		<script type="text/javascript" src="daksys-webhelp/resources/js/localization.js"></script>
+		<script type="text/javascript" src="daksys-webhelp/resources/js/parseuri.js"></script>
+		<script type="text/javascript" src="daksys-webhelp/resources/localization/strings.js"></script>
+		<!-- Template js -->
+		<script type="text/javascript" src="daksys-webhelp/template/resources/js/wt_topic.js?buildId=2023071300"></script>
+		<script type="text/javascript" src="daksys-webhelp/template/resources/js/wt_expand.js?buildId=2023071300"></script>
+	</head>
+	<body class="wt_topic_page frmBody" id="GUID-E0277959-64F0-47F3-A898-6D199B516231" onload="topicOnload()">
+		<!-- get_lang -->
+		<div id="lang" style="display:none">zh-CN</div><div id="mapoutputclass" style="display:none"></div>
+		<input hidden="hidden" id="UDCode" value="UD12345B" /><input hidden="hidden" id="Trademark" value="海康机器人" />
+		
+		<div class="content_box">
+			<div class="middle_view content_area col-sm-9" id="content_area">
+				<div class=" wt_breadcrumb "><ol><li><span class="home topicref"><a href="javascript:void(0)" onclick="gotoFirstPage()">首页</a></span></li><li><span class="topicref"><a href="GUID-3F138232-3CF2-4E3F-A3C0-3D677CF174B5.html" data-id="GUID-3F138232-3CF2-4E3F-A3C0-3D677CF174B5">读码器高级配置</a></span></li><li class="active"><span class="topicref">通讯控制</span></li></ol><div class="wt_breadcrumb_ellipsis" onclick="expandBreadcrumbDiv()"></div><div class="wt_breadcrumb_collapse" style="display: none;"><div class="wt_breadcrumb_collapse_button" onclick="collapseBreadcrumbDiv()"></div></div></div>
+				
+				<div id="container_body" class="container">
+					<div id="contentArea">
+						<div class=" wt_topic_content body ">
+    <h1 class="title topictitle1">通讯控制</h1>
+
+
+<div class="body taskbody"><p class="shortdesc">您可通过通讯控制功能配置自定义命令，利用串口、TCP或UDP协议从外部发送自定义命令至读码器，实现对读码器的灵活控制。</p>
+
+<div class="section context" id="GUID-E0277959-64F0-47F3-A898-6D199B516231__GUID-EBCCC853-1D9D-480A-B3B9-0458A2B4CA1B">
+            <div class="note note" id="GUID-E0277959-64F0-47F3-A898-6D199B516231__GUID-9DA0EDC3-96C6-496C-8C7C-CACA54020CD9"><span class="notetitle">说明</span> 
+                <p class="p">当前仅V4.0.2及以上版本固件的经济型极小型智能读码器支持此功能。</p>
+
+            </div>
+
+        </div>
+
+<ol class="ol steps" id="GUID-E0277959-64F0-47F3-A898-6D199B516231__GUID-A1D2CF75-572B-45F8-8CA0-3F2C16D0DF57"><li class="li step stepexpand" id="GUID-E0277959-64F0-47F3-A898-6D199B516231__GUID-F695962E-8B8F-4D3A-8D59-FB9A4F7E2209">
+                <span class="ph cmd">在IDMVS主界面功能导航栏，选择<span class="ph menucascade"><span class="ph uicontrol">通讯配置</span> &gt; <span class="ph uicontrol">通讯控制</span></span>。</span>
+                <div class="itemgroup info">
+                    <div class="fig fignone" id="GUID-E0277959-64F0-47F3-A898-6D199B516231__FIG_XCS_CY1_C3C">
+                        
+                        <img class="image" style="display:none;" id="GUID-E0277959-64F0-47F3-A898-6D199B516231__IMAGE_YCS_CY1_C3C" src="GUID-C8A0738B-D206-4C30-9738-C41DCAD91A35-high.png" width="2100" />
+                    <div class="fig_caption"><span class="figcap">图 1 通讯控制</span></div></div>
+
+                </div>
+            </li>
+<li class="li step stepexpand" id="GUID-E0277959-64F0-47F3-A898-6D199B516231__GUID-AE3E28C7-8D83-438F-8417-54B004BA7613">
+                <span class="ph cmd">在<span class="ph uicontrol">通讯控制</span>页签，配置自定义命令。</span>
+                <ol type="a" class="ol substeps" id="GUID-E0277959-64F0-47F3-A898-6D199B516231__SUBSTEPS_GZT_GRZ_B3C">
+                    <li class="li substep substepexpand" id="GUID-E0277959-64F0-47F3-A898-6D199B516231__GUID-6DB18A8A-B6E6-4CF8-9AAA-DE6201931057">
+                        <span class="ph cmd">在目标命令的<span class="ph uicontrol">相机执行动作</span>列，下拉选择读码器执行动作类别。</span>
+                        <div class="itemgroup info">
+                            <p class="p">可选择如下三种类别。</p>
+
+                            <dl class="dl parml">
+                                
+                                    <dt class="dt pt dlterm"><a name="GUID-E0277959-64F0-47F3-A898-6D199B516231__GUID-73C9E641-2647-4608-8690-B43C8180FB29"><!-- --></a>单次运行</dt>
+
+                                    <dd class="dd pd">
+                                        <p class="p">执行一次“输入参数”处配置的读码器控制操作。</p>
+
+                                    </dd>
+
+                                
+                                
+                                    <dt class="dt pt dlterm"><a name="GUID-E0277959-64F0-47F3-A898-6D199B516231__GUID-2BBF1E0E-5F75-432B-8048-3FE358984BB6"><!-- --></a>设置模块参数</dt>
+
+                                    <dd class="dd pd">
+                                        <p class="p">更新“输入参数”处配置的读码器参数值，参数值随<span class="keyword parmname">输入命令</span>传入。</p>
+
+                                    </dd>
+
+                                
+                                
+                                    <dt class="dt pt dlterm"><a name="GUID-E0277959-64F0-47F3-A898-6D199B516231__GUID-8AAB24F9-37BA-4923-9CF4-313AB928DCBC"><!-- --></a>获取模块参数</dt>
+
+                                    <dd class="dd pd">
+                                        <p class="p">读取“输入参数”处配置的读码器参数值。</p>
+
+                                    </dd>
+
+                                
+                            </dl>
+
+                        </div>
+                    </li>
+
+                    <li class="li substep substepexpand" id="GUID-E0277959-64F0-47F3-A898-6D199B516231__GUID-C3F5C597-1D20-4C59-8977-C14E5E7AFA12">
+                        <span class="ph cmd">在<span class="ph uicontrol">编码格式</span>列，下拉选择自定义命令编码格式，可选<span class="keyword parmname">ASCII</span>或<span class="keyword parmname">HEX</span>（十六进制）。</span>
+                        <div class="itemgroup info">
+                            <p class="p">在<span class="ph uicontrol">编码格式</span>列，切换编码格式，已配置的字符内容会对应切换显示格式。</p>
+
+                        </div>
+                    </li>
+
+                    <li class="li substep substepexpand" id="GUID-E0277959-64F0-47F3-A898-6D199B516231__GUID-7FFF3505-8DFF-44B5-88A0-BAB5983C377F">
+                        <span class="ph cmd">在<span class="ph uicontrol">输入命令</span>列，输入触发读码器执行操作的自定义命令。</span>
+                        <div class="itemgroup info">
+                            <div class="note caution"><div class="cautiontitle" id="GUID-E0277959-64F0-47F3-A898-6D199B516231__GUID-0AF6D5CC-F415-42AB-B02A-89519BA1343F">注意</div>
+                                <ul class="ul" id="GUID-E0277959-64F0-47F3-A898-6D199B516231__UL_HG3_WWZ_B3C">
+                                    <li class="li" id="GUID-E0277959-64F0-47F3-A898-6D199B516231__GUID-31CF1CDC-152D-4010-BE1B-1D89FC1EFE81">
+                                        <p class="p"><span class="ph uicontrol">输入命令</span>不能为空、不能包含空格字符，并且不能重复。</p>
+
+                                    </li>
+
+                                    <li class="li" id="GUID-E0277959-64F0-47F3-A898-6D199B516231__GUID-0171F46F-A329-40E3-8CF2-5281B702A805">
+                                        <p class="p"><span class="ph uicontrol">输入命令</span>不能与通信触发、通信切换和标定字符串重复。如果重复，按照“通信触发、通信切换
+                                            &gt; 标定 &gt; 通信控制”顺序执行，低优先级的操作将不会执行。</p>
+
+                                    </li>
+
+                                </ul>
+
+                            </div>
+
+                        </div>
+                    </li>
+
+                    <li class="li substep substepexpand" id="GUID-E0277959-64F0-47F3-A898-6D199B516231__GUID-C6DAEAAC-9647-42FF-8441-3DD959927AA1">
+                        <span class="ph cmd">在<span class="ph uicontrol">输入参数*</span>（*可取1、2或3）列，单击<img class="image icon" style="display:none;" id="GUID-E0277959-64F0-47F3-A898-6D199B516231__IMAGE_BGL_3P1_C3C" src="GUID-EE99C4C5-FDE0-46F8-B336-0D1770DF28B8-high.png" />，在列表中选则需要执行、设置或读取的参数。</span>
+                        <div class="itemgroup info">
+                            <div class="note note" id="GUID-E0277959-64F0-47F3-A898-6D199B516231__GUID-53F80568-80E9-4B55-AD0E-FDAB3AAB9EE5"><span class="notetitle">说明</span> 
+                                <p class="p">根据<span class="ph uicontrol">相机执行动作</span>处选择的值不同，可选择参数也不同，请以界面实际显示为准。</p>
+
+                            </div>
+
+                        </div>
+                    </li>
+
+                    <li class="li substep substepexpand" id="GUID-E0277959-64F0-47F3-A898-6D199B516231__GUID-FC06133A-94E1-4652-AD9A-E7D939996C48">
+                        <span class="ph cmd">在<span class="ph uicontrol">执行成功返回</span>和<span class="ph uicontrol">执行失败返回</span>列，分别配置命令执行成功或失败后返回的字符串。</span>
+                    </li>
+
+                    <li class="li substep substepexpand" id="GUID-E0277959-64F0-47F3-A898-6D199B516231__GUID-D839B41F-073B-4016-A844-A23663435415">
+                        <span class="ph cmd">在<span class="ph uicontrol">输出参数值开始标识</span>、<span class="ph uicontrol">输出参数值分隔标识</span>和<span class="ph uicontrol">输出参数值开始标识</span>，分别设置输出内容的开始标识、分隔标识和结束标识。</span>
+                    </li>
+
+                    <li class="li substep substepexpand" id="GUID-E0277959-64F0-47F3-A898-6D199B516231__GUID-383510FA-BA86-4CAF-A8E7-91E4E8D3C0F7"><strong>可选操作： </strong>
+                        <span class="ph cmd">单击<span class="ph uicontrol">添加命令</span>并重复以上步骤，再次添加命令。</span>
+                        <div class="itemgroup info">
+                            <p class="p">您也可以单击<span class="ph uicontrol">操作</span>列的<img class="image icon" style="display:none;" id="GUID-E0277959-64F0-47F3-A898-6D199B516231__IMAGE_FNX_3Y1_C3C" src="GUID-B6494558-0621-4454-8852-92788683D178-high.png" />，删除对应的命令。</p>
+
+                        </div>
+                    </li>
+
+                    <li class="li substep substepexpand" id="GUID-E0277959-64F0-47F3-A898-6D199B516231__GUID-CDDD77E8-77E1-4D9C-9988-9D1E1BEA21EF">
+                        <span class="ph cmd">单击<span class="ph uicontrol">保存</span>。</span>
+                    </li>
+
+                </ol>
+
+            </li>
+<li class="li step stepexpand" id="GUID-E0277959-64F0-47F3-A898-6D199B516231__GUID-F7A85A70-80D3-4B0D-A153-9A0C72AA3377">
+                <span class="ph cmd">开启<span class="keyword parmname">通讯命令协议</span>。</span>
+                <ol type="a" class="ol substeps" id="GUID-E0277959-64F0-47F3-A898-6D199B516231__SUBSTEPS_LBV_1R1_C3C">
+                    <li class="li substep substepexpand" id="GUID-E0277959-64F0-47F3-A898-6D199B516231__GUID-0C7268BA-40EC-463B-A883-71C346C4BD46">
+                        <span class="ph cmd">在IDMVS主界面右上角，单击<span class="ph uicontrol">全部参数</span>。</span>
+                    </li>
+
+                    <li class="li substep substepexpand" id="GUID-E0277959-64F0-47F3-A898-6D199B516231__GUID-1B574A68-6BE9-4CB8-B64C-27C24F0FBB65">
+                        <span class="ph cmd">在<span class="ph uicontrol">全部参数</span>页面，查找并单击<span class="ph uicontrol">外部命令控制</span>。</span>
+                    </li>
+
+                    <li class="li substep substepexpand" id="GUID-E0277959-64F0-47F3-A898-6D199B516231__GUID-4B04DF15-5F4C-4834-BF5F-2621EC0DA129">
+                        <span class="ph cmd">在<span class="ph uicontrol">外部命令控制</span>模块中，根据实际情况配置<span class="ph uicontrol">通讯命令协议</span>和相关参数。</span>
+                        <div class="itemgroup info">
+                            <div class="note note" id="GUID-E0277959-64F0-47F3-A898-6D199B516231__GUID-2935DEAC-EEDE-4B6F-93D1-489785359153"><span class="notetitle">说明</span> 
+                                <p class="p">各通讯命令协议的相关参数说明可参考<a class="xref" href="GUID-ED0C6770-2ECF-4430-B692-9078556D1D2D.html#GUID-ED0C6770-2ECF-4430-B692-9078556D1D2D" title="通信指令是通过TCP、UDP及Serial其中任意一种通信方式给读码器发送的指令。读码器接收到指令后，可根据指令内容执行设备控制、用户参数、触发与IO、码制使能以及智能调参等功能设置。">通信指令</a>目录下的各“配置客户端”章节。</p>
+
+                            </div>
+
+                        </div>
+                    </li>
+
+                </ol>
+
+            </li>
+</ol>
+
+<div class="example section" id="GUID-E0277959-64F0-47F3-A898-6D199B516231__GUID-6EFE1FDF-0DCB-4D94-9DA6-1B1570AF17B4">
+            <p class="p">假设在通讯控制页面添加并保存如下命令。</p>
+
+            <div class="fig fignone" id="GUID-E0277959-64F0-47F3-A898-6D199B516231__FIG_JPG_2V1_C3C">
+                
+                <img class="image" style="display:none;" id="GUID-E0277959-64F0-47F3-A898-6D199B516231__IMAGE_KPG_2V1_C3C" src="GUID-B0B72433-CC2A-49EE-9678-73C9C3AC972A-high.png" width="2100" />
+            <div class="fig_caption"><span class="figcap">图 2 命令示例</span></div></div>
+
+            <p class="p">在外部设备或软件中输入命令并通过串口、TCP或UDP协议发送给读码器，输入命令及其对应返回结果如下。</p>
+
+            
+<div class="div_table"><table cellpadding="4" cellspacing="0" summary="" style="display:none;" id="tbl_rowfixed" class="table wt_table_rowfixed" frame="border" border="1" rules="all"></table><table cellpadding="4" cellspacing="0" summary="" id="GUID-E0277959-64F0-47F3-A898-6D199B516231__TABLE_A2X_TV1_C3C" class="table" frame="border" border="1" rules="all"><caption><span class="tablecap">表 1 返回结果</span></caption>
+                    
+                    
+                    <thead class="thead" align="left">
+                        <tr>
+                            <th class="entry" valign="top" width="50%" id="d82181e392">
+                                <p class="p">输入命令</p>
+
+                            </th>
+
+                            <th class="entry" valign="top" width="50%" id="d82181e398">
+                                <p class="p">返回结果</p>
+
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody class="tbody">
+                        <tr>
+                            <td class="entry" valign="top" width="50%" headers="d82181e392 ">
+                                <p class="p">runonce</p>
+
+                            </td>
+
+                            <td class="entry" valign="top" width="50%" headers="d82181e398 ">
+                                <p class="p">OK[]</p>
+
+                            </td>
+
+                        </tr>
+
+                        <tr>
+                            <td class="entry" valign="top" width="50%" headers="d82181e392 ">
+                                <p class="p">setparam User1,200,1</p>
+
+                            </td>
+
+                            <td class="entry" valign="top" width="50%" headers="d82181e398 ">
+                                <p class="p">OK[User1&amp;200&amp;1]</p>
+
+                            </td>
+
+                        </tr>
+
+                        <tr>
+                            <td class="entry" valign="top" width="50%" headers="d82181e392 ">
+                                <p class="p">getparam</p>
+
+                            </td>
+
+                            <td class="entry" valign="top" width="50%" headers="d82181e398 ">
+                                <p class="p">OK[User1&amp;200&amp;1]</p>
+
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+</div>
+
+        </div>
+
+</div>
+
+
+</div>
+						<div class=" wt_topic_wpp_content wt_pc_only "><div class=" wt_topic_wpp_content_flex "><div class="wt_topic_wpp_item like"></div><div class="wt_topic_wpp_item view"></div><div class="wt_topic_wpp_item share">分享</div></div></div>
+						
+						
+						
+					</div>
+				</div><!-- container_body -->
+				
+				<div class=" body_footer "><div onclick="prevTopic()" class=" body_footer_left link_button "><span>上一页</span></div><div onclick="nextTopic()" class=" body_footer_right link_button "><span>下一页</span></div></div>
+				<div class=" body_wpp mobile_only"><div class="wt_body_mobile_like"></div><div class="wt_body_mobile_view"></div></div>
+				<!-- <whc:webhelp_side_toc /> -->
+				
+			</div> <!-- middle_view content_area -->
+			<div class=" right_content wt_pc_only "></div>
+		</div> <!-- content_box -->
+		
+		<!-- 置顶按钮 -->
+		<div class="body_to_top" onclick="scrollTopicTop()"></div> 
+		<!-- 评价反馈 -->
+		<div onclick="manualFeedback()" class=" body_feedback " data-href="https://wj.hikvision.com/#/public-survey?id=64c8b90d80e02e9e88feca2f"></div>
+		
+	</body>
+</html>

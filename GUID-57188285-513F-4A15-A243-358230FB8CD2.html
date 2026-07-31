@@ -1,0 +1,748 @@
+
+<!DOCTYPE html
+  PUBLIC "" "about:legacy-compat">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:whc="http://www.daksys.com/webhelp/components" xml:lang="zh-cn" lang="zh-cn">
+	<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />        
+      <meta name="copyright" content="©  杭州海康威视数字技术股份有限公司。保留一切权利。" /><meta name="DC.Type" content="concept" /><meta name="DC.Title" content="其他工具" /><meta name="abstract" content="除前文所述工具外，IDMVS还支持HIKTerm日志采集工具、IDPS工具、网络调试工具和USB驱动安装工具。" /><meta name="description" content="除前文所述工具外，IDMVS还支持HIKTerm日志采集工具、IDPS工具、网络调试工具和USB驱动安装工具。" /><meta name="DC.Relation" scheme="URI" content="GUID-AC630637-4E20-4722-806E-0755E6142EA4.html" /><meta name="DC.Format" content="XHTML" /><meta name="DC.Identifier" content="GUID-57188285-513F-4A15-A243-358230FB8CD2" /><meta name="DC.Language" content="zh-CN" /><title>其他工具</title><!-- Generated with dksgen version 1.0, build number 2023071300.  --><meta viewport="Content-Type" content="width=device-width, initial-scale=1.0" /><meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" /><meta name="wh-path2root" content="index.html" />
+		<!-- commonltr css -->
+		<link rel="stylesheet" type="text/css" href="daksys-webhelp/resources/css/commonltr.css" />
+		<!-- Bootstrap css -->
+		<link rel="stylesheet" type="text/css" href="daksys-webhelp/resources/bootstrap/css/bootstrap.min.css" />
+		<link rel="stylesheet" type="text/css" href="daksys-webhelp/resources/bootstrap/css/bootstrap-theme.min.css" />
+		<link rel="stylesheet" type="text/css" href="daksys-webhelp/resources/js/jquery-ui.min.css" />
+		
+		<!-- Template css  -->
+		<link href="daksys-webhelp/template/resources/css/HIKROBOT_color.css?buildId=2023071300" rel="stylesheet" type="text/css" />
+		<link rel="stylesheet" type="text/css" href="daksys-webhelp/template/resources/css/wt_topic.css?buildId=2023071300" />
+		<link rel="stylesheet" type="text/css" href="daksys-webhelp/template/resources/css/wt_topic_m.css?buildId=2023071300" />
+		<link rel="stylesheet" type="text/css" href="daksys-webhelp/template/resources/css/wt_expand.css?buildId=2023071300" />
+		<link rel="stylesheet" type="text/css" href="daksys-webhelp/template/resources/css/wt_note.css?buildId=2023071300" />
+		<link rel="stylesheet" type="text/css" href="daksys-webhelp/template/resources/css/wt_steps.css?buildId=2023071300" />
+		
+		<!-- jquery js  -->
+		<script type="text/javascript" src="daksys-webhelp/resources/js/jquery-3.6.2.min.js"></script>
+		<script type="text/javascript" src="daksys-webhelp/resources/js/jquery.cookie.js"></script>
+		<script type="text/javascript" src="daksys-webhelp/resources/js/jquery.highlight-3.js"></script>
+		<script type="text/javascript" src="daksys-webhelp/resources/js/jquery-ui.min.js"></script>
+		
+		<!-- common js  -->
+		<script type="text/javascript" src="daksys-webhelp/resources/bootstrap/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="daksys-webhelp/resources/js/base64.js"></script>
+		<script type="text/javascript" src="daksys-webhelp/resources/js/browserDetect.js"></script>
+		<script type="text/javascript" src="daksys-webhelp/resources/js/localization.js"></script>
+		<script type="text/javascript" src="daksys-webhelp/resources/js/parseuri.js"></script>
+		<script type="text/javascript" src="daksys-webhelp/resources/localization/strings.js"></script>
+		<!-- Template js -->
+		<script type="text/javascript" src="daksys-webhelp/template/resources/js/wt_topic.js?buildId=2023071300"></script>
+		<script type="text/javascript" src="daksys-webhelp/template/resources/js/wt_expand.js?buildId=2023071300"></script>
+	</head>
+	<body class="wt_topic_page frmBody" id="GUID-57188285-513F-4A15-A243-358230FB8CD2" onload="topicOnload()">
+		<!-- get_lang -->
+		<div id="lang" style="display:none">zh-CN</div><div id="mapoutputclass" style="display:none"></div>
+		<input hidden="hidden" id="UDCode" value="UD12345B" /><input hidden="hidden" id="Trademark" value="海康机器人" />
+		
+		<div class="content_box">
+			<div class="middle_view content_area col-sm-9" id="content_area">
+				<div class=" wt_breadcrumb "><ol><li><span class="home topicref"><a href="javascript:void(0)" onclick="gotoFirstPage()">首页</a></span></li><li><span class="topicref"><a href="GUID-9E538898-40D1-480E-8A36-40BEC4586E63.html" data-id="GUID-9E538898-40D1-480E-8A36-40BEC4586E63">菜单栏相关介绍</a></span></li><li><span class="topicref"><a href="GUID-AC630637-4E20-4722-806E-0755E6142EA4.html" data-id="GUID-AC630637-4E20-4722-806E-0755E6142EA4">工具</a></span></li><li class="active"><span class="topicref">其他工具</span></li></ol><div class="wt_breadcrumb_ellipsis" onclick="expandBreadcrumbDiv()"></div><div class="wt_breadcrumb_collapse" style="display: none;"><div class="wt_breadcrumb_collapse_button" onclick="collapseBreadcrumbDiv()"></div></div></div>
+				
+				<div id="container_body" class="container">
+					<div id="contentArea">
+						<div class=" wt_topic_content body ">
+    <h1 class="title topictitle1">其他工具</h1>
+
+
+<div class="body conbody"><p class="shortdesc"><span class="ph">除前文所述工具外，IDMVS还支持HIKTerm日志采集工具、IDPS工具、网络调试工具和USB驱动安装工具。</span></p>
+
+        <ul class="ul" id="GUID-57188285-513F-4A15-A243-358230FB8CD2__UL_PWL_G12_WHC">
+            <li class="li" id="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-F2F1CFB7-03F4-4278-9A89-9FE8BB24CBE5">
+                <p class="p">HIKTerm日志采集工具可提供实时采集日志、远程系统访问和发送调试指令功能，适用于读码器深度问题排查。</p>
+
+            </li>
+
+            <li class="li" id="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-158010E6-8AA0-4E49-8129-01E45ADF1E10">
+                <p class="p">IDPS工具是专为超小型智能读码器开发的客户端软件，支持串口和设置码双配置模式，涵盖参数设置、图像预览、查看读码结果和数据交互等功能。</p>
+
+            </li>
+
+            <li class="li" id="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-BEB3119D-8F56-4B25-B96C-6F3CD2B7B3AD">
+                
+                <p class="p">网络调试工具是一款集网络通信测试与串口调试功能于一体的通用工具，适用于多种场景的通信调试与问题排查。</p>
+
+            </li>
+
+            <li class="li" id="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-6A21965E-32F8-4665-A09A-63B136572F5C">
+                
+                <p class="p">USB驱动安装工具专用于安装读码器驱动程序，确保IDMVS能够正常枚举和连接USB接口的读码器。</p>
+
+            </li>
+
+        </ul>
+
+        <div class="section" id="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-81272DA9-83F9-4703-8FBA-378C708E9126"><h2 class="title sectiontitle">HIKTerm日志采集工具</h2>
+            
+            <p class="p">HIKTerm日志采集工具类似SecureCRT串口调试工具，主要用于实时收集读码器的日志信息、远程进入系统、发送调试指令等功能。相较于IDMVS的<span class="keyword parmname">读码器日志</span>功能，HIKTerm更适合高级调试与问题追踪。二者对比如下。</p>
+
+            
+<div class="div_table"><table cellpadding="4" cellspacing="0" summary="" style="display:none;" id="tbl_rowfixed" class="table wt_table_rowfixed" frame="border" border="1" rules="all"></table><table cellpadding="4" cellspacing="0" summary="" id="GUID-57188285-513F-4A15-A243-358230FB8CD2__TABLE_ST2_FHP_WFC" class="table" frame="border" border="1" rules="all"><caption><span class="tablecap">表 1 读码器日志和HIKTerm对比</span></caption>
+                    
+                    
+                    
+                    <thead class="thead" align="left">
+                        <tr>
+                            <th class="entry" valign="top" width="18.484288354898336%" id="d27295e96">
+                                <p class="p">日志工具</p>
+
+                            </th>
+
+                            <th class="entry" valign="top" width="41.21996303142329%" id="d27295e102">
+                                <p class="p">使用场景</p>
+
+                            </th>
+
+                            <th class="entry" valign="top" width="40.29574861367837%" id="d27295e108">
+                                <p class="p">特点</p>
+
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody class="tbody">
+                        <tr>
+                            <td class="entry" valign="top" width="18.484288354898336%" headers="d27295e96 ">
+                                <p class="p">HIKTerm</p>
+
+                            </td>
+
+                            <td class="entry" valign="top" width="41.21996303142329%" headers="d27295e102 ">
+                                <ul class="ul" id="GUID-57188285-513F-4A15-A243-358230FB8CD2__UL_O5G_YKP_WFC">
+                                    <li class="li" id="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-C3A9D2B4-EA84-465D-B00D-9FF981BFE28B">
+                                        <p class="p"><span class="keyword parmname">读码器日志</span>无法导出时</p>
+
+                                    </li>
+
+                                    <li class="li" id="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-69DD45E5-9717-49BA-82F5-27DD1ADC08C2">
+                                        <p class="p"><span class="keyword parmname">读码器日志</span>导出报错或记录有误时</p>
+
+                                    </li>
+
+                                    <li class="li" id="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-FEB94C10-B79C-4F15-8761-DDE9566585EC">
+                                        <p class="p">辅助研发人员进行特殊模块问题排查，如算法、DSP、FPGA</p>
+
+                                    </li>
+
+                                </ul>
+
+                            </td>
+
+                            <td class="entry" valign="top" width="40.29574861367837%" headers="d27295e108 ">
+                                <ul class="ul" id="GUID-57188285-513F-4A15-A243-358230FB8CD2__UL_JKN_MLM_XFC">
+                                    <li class="li" id="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-F3D1B87F-1F94-4B00-AED8-E6A0B1931101">
+                                        <p class="p">实时记录日志信息</p>
+
+                                    </li>
+
+                                    <li class="li" id="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-9FCCF541-6A98-46FF-9E0A-F45498771F59">
+                                        <p class="p">根据指令实时导出研发人员所需日志信息，实现故障复现</p>
+
+                                    </li>
+
+                                </ul>
+
+                            </td>
+
+                        </tr>
+
+                        <tr>
+                            <td class="entry" valign="top" width="18.484288354898336%" headers="d27295e96 ">
+                                <p class="p"><span class="keyword parmname">读码器日志</span></p>
+
+                            </td>
+
+                            <td class="entry" valign="top" width="41.21996303142329%" headers="d27295e102 ">
+                                <p class="p">从mnt/cfg/log等路径导出读码器日志文件，适合常规日志导出。具体介绍参见<a class="xref" href="GUID-5E284150-1F02-4ED0-9DFF-AA638F0F3108.html#GUID-5E284150-1F02-4ED0-9DFF-AA638F0F3108" title="读码器日志主要用于查看读码器自身的日志信息。一般在使用读码器遇到问题时，可尝试通过读码器日志查看问题原因。">读码器日志</a>。</p>
+
+                            </td>
+
+                            <td class="entry" valign="top" width="40.29574861367837%" headers="d27295e108 ">
+                                <p class="p">运行日志，记录固定日志信息</p>
+
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+</div>
+
+            <p class="p">使用HIKTerm工具的操作步骤如下。</p>
+
+            <ol class="ol" id="GUID-57188285-513F-4A15-A243-358230FB8CD2__OL_RRB_ZNP_WFC">
+                <li class="li" id="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-7404D7FF-6F63-4C22-9601-04D6E67B4F94">
+                    <p class="p">单击菜单栏的<span class="ph menucascade"><span class="ph uicontrol">工具</span> &gt; <span class="ph uicontrol">其他工具</span></span>，可自动跳转到HIKTerm工具所在目录。</p>
+
+                </li>
+
+                <li class="li" id="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-0A67FC8B-CA07-4C7D-907D-99D0E63B109A">
+                    <p class="p">将HIKTerm压缩包解压到当前文件夹。</p>
+
+                </li>
+
+                <li class="li" id="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-89F94013-479D-43A3-A792-59B70CC021C0">
+                    <p class="p">进入解压后的文件夹，双击运行Terminal.exe文件后进入工具主界面。</p>
+
+                    <div class="fig fignone" id="GUID-57188285-513F-4A15-A243-358230FB8CD2__FIG_JYS_DWQ_WFC">
+                        
+                        <img class="image" style="display:none;" id="GUID-57188285-513F-4A15-A243-358230FB8CD2__IMAGE_KYS_DWQ_WFC" src="GUID-AA27F92F-73A6-4F2E-B345-1AE1CBC854E3-high.png" width="2100" />
+                    <div class="fig_caption"><span class="figcap">图 1 HIKTerm工具主界面</span></div></div>
+
+                </li>
+
+                <li class="li" id="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-09B84A43-A423-4116-8F49-C4542E5A74C2">
+                    <p class="p">单击<span class="ph uicontrol">主机列表</span>右侧的<img class="image icon" style="display:none;" id="GUID-57188285-513F-4A15-A243-358230FB8CD2__IMAGE_H2N_WWQ_WFC" src="GUID-74715166-A9E5-49F1-9867-64D93DE3AD28-high.png" />选择<span class="keyword parmname">新增主机</span>。</p>
+
+                    <div class="fig fignone" id="GUID-57188285-513F-4A15-A243-358230FB8CD2__FIG_KKR_D1R_WFC">
+                        
+                        <img class="image" style="display:none;" id="GUID-57188285-513F-4A15-A243-358230FB8CD2__IMAGE_LKR_D1R_WFC" height="1417" src="GUID-1639A1EF-F27F-400D-9C5D-1003403E64EB-high.png" />
+                    <div class="fig_caption"><span class="figcap">图 2 新增主机</span></div></div>
+
+                </li>
+
+                <li class="li" id="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-BF7CB5C9-59C2-43EF-AC16-86520022AA3D">
+                    <p class="p">配置以下主机连接信息。</p>
+
+                    <ul class="ul" id="GUID-57188285-513F-4A15-A243-358230FB8CD2__UL_PN5_WBR_WFC">
+                        <li class="li" id="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-E64AD82A-83FC-4A9B-A768-6BB1B82D388A">
+                            <p class="p"><span class="keyword parmname">连接方式</span>：仅经济型极小型智能读码器选择<span class="keyword parmname">telnet</span>，其他智能读码器选择<span class="keyword parmname">ssh</span>。</p>
+
+                        </li>
+
+                        <li class="li" id="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-71A607FE-C117-40E2-B319-BDC3F207B022">
+                            <p class="p"><span class="keyword parmname">IP</span>：输入需要收集日志信息的读码器IP地址。</p>
+
+                        </li>
+
+                        <li class="li" id="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-8F86EC10-0399-4679-B713-409FAE21714D">
+                            <p class="p"><span class="keyword parmname">用户名</span>：输入“root”。</p>
+
+                        </li>
+
+                        <li class="li" id="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-B92CA8FD-A08B-4D90-80C9-AF368AE53C2C">
+                            <p class="p"><span class="keyword parmname">日志路径</span>：选择日志路径。</p>
+
+                        </li>
+
+                        <li class="li" id="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-DE2A735E-2D35-4B26-A497-76908D5C5BAB">
+                            <p class="p"><span class="keyword parmname">是否要记录日志</span>：选择“是”。</p>
+
+                        </li>
+
+                    </ul>
+
+                    <div class="note note" id="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-220D91B4-0A05-4E75-9116-F98F2166EB4C"><span class="notetitle">说明</span> 
+                        <p class="p">未提及的参数保持默认即可。</p>
+
+                    </div>
+
+                    <div class="fig fignone" id="GUID-57188285-513F-4A15-A243-358230FB8CD2__FIG_GT4_CMR_WFC">
+                        
+                        <img class="image" style="display:none;" id="GUID-57188285-513F-4A15-A243-358230FB8CD2__IMAGE_HT4_CMR_WFC" src="GUID-A531EA59-C042-48C6-B97A-DC87335C77B7-high.png" width="1400" />
+                    <div class="fig_caption"><span class="figcap">图 3 配置主机连接信息</span></div></div>
+
+                </li>
+
+                <li class="li" id="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-A112D884-DEE7-499A-9FFB-8511D429851F">
+                    <p class="p">单击<span class="keyword parmname">确认</span>，完成主机新增。</p>
+
+                </li>
+
+                <li class="li" id="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-468B9F6B-2BD7-4168-92C1-BA2EE44FE1C6">
+                    <p class="p">在主界面<span class="keyword parmname">主机列表</span>双击刚添加的主机，进入设备控制台。</p>
+
+                </li>
+
+                <li class="li" id="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-77C9D71B-0D61-41D4-B8A4-827A8D30C0B7">
+                    <p class="p">单击下方<span class="keyword parmname">相机日志</span>标签页，回车开始实时记录日志。</p>
+
+                    <div class="fig fignone" id="GUID-57188285-513F-4A15-A243-358230FB8CD2__FIG_GNX_FMR_WFC">
+                        
+                        <img class="image" style="display:none;" id="GUID-57188285-513F-4A15-A243-358230FB8CD2__IMAGE_HNX_FMR_WFC" src="GUID-34E9EB3B-1380-460C-8A5D-AF6C3BF4A685-high.png" width="2100" />
+                    <div class="fig_caption"><span class="figcap">图 4 相机日志</span></div></div>
+
+                </li>
+
+                <li class="li" id="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-AE4355AD-7981-4D83-8E90-23471696D62D">
+                    <p class="p">问题复现后，HIKTerm会将实时采集的日志自动保存在设置的日志路径下。请将该文件打包发送给技术支持，以便进一步分析处理。</p>
+
+                </li>
+
+            </ol>
+
+            <div class="note note" id="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-819F8E2B-D542-41D0-B415-DD8807F54960"><span class="notetitle">说明</span> 
+                <p class="p">HIKTerm必须持续运行。若出现网络中断或读码器断电重启，需手动重新连接主机。</p>
+
+            </div>
+
+        </div>
+
+        <div class="section" id="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-9ECA26B5-85E8-4F28-8F00-5CC0F3760CEF"><h2 class="title sectiontitle">IDPS工具</h2>
+            
+            <p class="p">IDPS是一款专为超小型智能读码器开发的客户端软件，主要用于读码器的参数配置、采集图像预览、读码结果查看以及数据交互。软件提供串口配置、设置码配置2种配置方式，可适用于串口、离线不同的应用场景。具体介绍和使用方式参见<a class="xref" href="https://pinfo.hikrobotics.com/hkws/unzip/20240408144320_25267_doc/" target="_blank">海康机器人IDPS智能读码器客户端</a>用户手册。</p>
+
+            
+        </div>
+
+        <div class="section" id="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-E6C6D622-52A8-495C-8A85-07C86CBF62F0"><h2 class="title sectiontitle">网络调试工具</h2>
+            
+            
+            <p class="p">网络调试工具集成了串口和网络调试功能，能够简化读码器的连接测试、协议验证及故障诊断流程。该工具支持TCP、UDP、串口等多种通信协议，可模拟客户端或服务器端，验证读码器与上位机之间的连通性，帮助您快速验证通信参数，从而提升调试效率。</p>
+
+            <div class="fig fignone" id="GUID-57188285-513F-4A15-A243-358230FB8CD2__FIG_NYV_15J_WHC">
+                
+                <img class="image" style="display:none;" id="GUID-57188285-513F-4A15-A243-358230FB8CD2__IMAGE_OYV_15J_WHC" src="GUID-2713F437-F568-4A10-BF89-598D5EDAD154-high.png" width="1400" />
+            <div class="fig_caption"><span class="figcap">图 5 网络调试工具</span></div></div>
+
+            <p class="p">使用网络调试工具的操作步骤如下。</p>
+
+            <ol class="ol" id="GUID-57188285-513F-4A15-A243-358230FB8CD2__OL_YDF_BC2_WHC">
+                <li class="li" id="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-F9BC83DC-3747-427F-9CE9-9A07CB1F9C82">
+                    <p class="p">单击菜单栏的<span class="ph menucascade"><span class="ph uicontrol">工具</span> &gt; <span class="ph uicontrol">其他工具</span></span>，可自动跳转到网络调试工具所在目录。</p>
+
+                </li>
+
+                <li class="li" id="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-04DF939B-2D30-406B-B41D-AF9DE8B89E4D">
+                    <p class="p">将网络调试工具压缩包（CommAssist_Release_*.zip）解压到当前文件夹。</p>
+
+                </li>
+
+                <li class="li" id="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-623112B0-DC66-4A9C-91A9-2BA4823F93C3">
+                    <p class="p">进入解压后的文件夹，双击<span class="ph uicontrol">CommAssist.exe</span>进入工具主界面。</p>
+
+                </li>
+
+                <li class="li" id="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-F3E9678A-3051-4136-BBE0-412634AD33D3">
+                    <p class="p">在主界面顶部<span class="ph uicontrol">功能选择</span>处选择要调试的功能，可选如下功能。</p>
+
+                    <ul class="ul" id="GUID-57188285-513F-4A15-A243-358230FB8CD2__UL_GDV_XG2_WHC">
+                        <li class="li" id="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-53C2AA0F-6EBE-4772-AF9D-8723A01ACB13">
+                            <p class="p">串口调试：在PC上创建一个虚拟的串口通信环境，从而监控、调试和读码器串口的通信过程。</p>
+
+                        </li>
+
+                        <li class="li" id="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-4E016A05-9F56-42AF-A0D0-501593AEFEC9">
+                            <p class="p">网络调试：在PC上创建一个虚拟的网络通信环境，模拟客户端或服务器端进行数据收发，从而监控、调试和读码器的网络通信过程。</p>
+
+                        </li>
+
+                    </ul>
+
+                </li>
+
+                <li class="li" id="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-191C6C91-B03E-4247-8EA4-F72DC4DE70D9">
+                    <p class="p">配置串口或网络设置。</p>
+
+                    <ul class="ul" id="GUID-57188285-513F-4A15-A243-358230FB8CD2__UL_DJC_LJ2_WHC">
+                        <li class="li" id="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-DFA30AFD-1654-4377-8CCB-6790E7C41DF7">
+                            <p class="p">当选择串口调试时，在<span class="ph uicontrol">串口设置</span>区域可配置<span class="keyword parmname">串口号</span>、<span class="keyword parmname">波特率</span>、<span class="ph uicontrol">校验位</span>、<span class="ph uicontrol">数据位</span>和<span class="keyword parmname">停止位</span>。完成设置后，单击<span class="ph uicontrol">打开</span>，开启串口连接。</p>
+
+                        </li>
+
+                        <li class="li" id="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-9CC7D39B-8EA0-4068-A88A-A513EB3E821D">
+                            <p class="p">当选择网络调试时，在<span class="ph uicontrol">网络设置</span>区域配置<span class="keyword parmname">协议</span>，根据所选<span class="keyword parmname">协议</span>配置相关参数。完成设置后，单击<span class="ph uicontrol">连接</span>，开启网络连接。</p>
+
+                            <ul class="ul" id="GUID-57188285-513F-4A15-A243-358230FB8CD2__UL_WQZ_PJ2_WHC">
+                                <li class="li" id="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-E8031EB5-865D-451D-98A3-253D7C831519">
+                                    <p class="p">当协议选择“UDP”时，配置如下参数。</p>
+
+                                    <dl class="dl parml">
+                                        
+                                            <dt class="dt pt dlterm"><a name="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-0B47F07E-7A82-4905-8A01-C10C1719A6B3"><!-- --></a>本机IP</dt>
+
+                                            <dd class="dd pd">
+                                                <p class="p">网络调试工具会自动识别并显示当前计算机IP。</p>
+
+                                            </dd>
+
+                                        
+                                        
+                                            <dt class="dt pt dlterm"><a name="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-98211D15-D3AC-4DCA-B039-C0FA94AAC6E9"><!-- --></a>本地端口</dt>
+
+                                            <dd class="dd pd">
+                                                <p class="p">设置计算机用于接收数据的端口号。</p>
+
+                                            </dd>
+
+                                        
+                                        
+                                            <dt class="dt pt dlterm"><a name="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-5F528D5E-2F27-433D-A65C-A7F8FE6ECE1C"><!-- --></a>目标IP</dt>
+
+                                            <dd class="dd pd">
+                                                <p class="p">设置目标访问读码器的IP地址。</p>
+
+                                            </dd>
+
+                                        
+                                        
+                                            <dt class="dt pt dlterm"><a name="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-7A103E09-CBA6-4C4E-82F9-D522A46BDA74"><!-- --></a>目标端口</dt>
+
+                                            <dd class="dd pd">
+                                                <p class="p">设置目标访问读码器的端口号，将向此端口发送数据。</p>
+
+                                            </dd>
+
+                                        
+                                    </dl>
+
+                                </li>
+
+                                <li class="li" id="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-28BE53A8-4279-4222-BD61-A801A5F663B5">
+                                    <p class="p">当协议选择“TCP Client”时，配置如下参数。</p>
+
+                                    <dl class="dl parml">
+                                        
+                                            <dt class="dt pt dlterm"><a name="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-2B48561E-2EFD-4125-A428-D94DC0EB597D"><!-- --></a>本机IP</dt>
+
+                                            <dd class="dd pd">
+                                                <p class="p">网络调试工具会自动识别并显示当前计算机IP。</p>
+
+                                            </dd>
+
+                                        
+                                        
+                                            <dt class="dt pt dlterm"><a name="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-8A0DD806-5ED7-4322-8927-DA10B1530340"><!-- --></a>本地端口</dt>
+
+                                            <dd class="dd pd">
+                                                <p class="p">可不填，设置计算机用于接收数据的端口号。</p>
+
+                                            </dd>
+
+                                        
+                                        
+                                            <dt class="dt pt dlterm"><a name="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-DAB37A95-6673-4F6E-8669-14082D22863C"><!-- --></a>服务器IP</dt>
+
+                                            <dd class="dd pd">
+                                                <p class="p">设置目标访问读码器的IP地址。</p>
+
+                                            </dd>
+
+                                        
+                                        
+                                            <dt class="dt pt dlterm"><a name="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-56337509-62C1-4E5B-BD80-1FBEE0316AC1"><!-- --></a>服务器端口</dt>
+
+                                            <dd class="dd pd">
+                                                <p class="p">设置目标访问读码器的端口号，将向此端口发送数据。</p>
+
+                                            </dd>
+
+                                        
+                                    </dl>
+
+                                </li>
+
+                                <li class="li" id="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-256871E2-C8A9-4941-88AC-12C5EC83235E">
+                                    <p class="p">当协议选择“TCP Server”时，配置如下参数。</p>
+
+                                    <dl class="dl parml">
+                                        
+                                            <dt class="dt pt dlterm"><a name="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-E0A0E6CF-1944-42DC-BD9E-020DF7B9BDFC"><!-- --></a>本机IP</dt>
+
+                                            <dd class="dd pd">
+                                                <p class="p">网络调试工具会自动识别并显示当前计算机IP。</p>
+
+                                            </dd>
+
+                                        
+                                        
+                                            <dt class="dt pt dlterm"><a name="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-36406FD4-E01D-4B38-B552-CAFBF872DE2E"><!-- --></a>监听端口</dt>
+
+                                            <dd class="dd pd">
+                                                <p class="p">设置计算机用于接收数据的端口号。</p>
+
+                                            </dd>
+
+                                        
+                                        
+                                            <dt class="dt pt dlterm"><a name="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-49D0BF75-14CB-4711-9190-1196679A77D5"><!-- --></a>客户端IP</dt>
+
+                                            <dd class="dd pd">
+                                                <p class="p">无需配置，当读码器作为客户端连接到计算机后会显示读码器IP。</p>
+
+                                            </dd>
+
+                                        
+                                        
+                                            <dt class="dt pt dlterm"><a name="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-07DB88DC-5845-4AB6-A998-B28A80A86EB6"><!-- --></a>客户端端口</dt>
+
+                                            <dd class="dd pd">
+                                                <p class="p">无需配置，当读码器作为客户端连接到计算机后会显示读码器的数据传输端口号。</p>
+
+                                            </dd>
+
+                                        
+                                    </dl>
+
+                                </li>
+
+                            </ul>
+
+                        </li>
+
+                    </ul>
+
+                </li>
+
+                <li class="li" id="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-D9D2AB14-6535-4B5D-A178-CD6B8D59E95E">
+                    <p class="p">（可选）在<span class="ph uicontrol">接收区设置</span>区域，配置数据接收相关参数。</p>
+
+                    <dl class="dl parml">
+                        
+                            <dt class="dt pt dlterm"><a name="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-2D2B6769-EA43-418E-A07A-FEC2084D4D6C"><!-- --></a>接收转向文件</dt>
+
+                            <dd class="dd pd">
+                                <p class="p">是否将收到的数据实时存到本地文件中，开启后需选择存储数据的本地文本文件。</p>
+
+                            </dd>
+
+                        
+                        
+                            <dt class="dt pt dlterm"><a name="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-FFB1D1CE-FEAB-45D3-8476-AF853ACEB44F"><!-- --></a>显示接收时间</dt>
+
+                            <dd class="dd pd">
+                                <p class="p">是否在<span class="ph uicontrol">数据接收</span>区域显示接收数据的时间。</p>
+
+                            </dd>
+
+                        
+                        
+                            <dt class="dt pt dlterm"><a name="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-B082E7E2-9903-4E73-8C31-A974A2314E5B"><!-- --></a>十六进制显示</dt>
+
+                            <dd class="dd pd">
+                                <p class="p">是否将接收到的数据转为十六进制显示。</p>
+
+                            </dd>
+
+                        
+                        
+                            <dt class="dt pt dlterm"><a name="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-94C58F74-9608-4909-9127-F38147B99E84"><!-- --></a>暂停接收显示</dt>
+
+                            <dd class="dd pd">
+                                <p class="p">是否停止接收数据。</p>
+
+                            </dd>
+
+                        
+                        
+                            <dt class="dt pt dlterm"><a name="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-FA911FCA-A6B4-4904-BFD5-03A9855A1E25"><!-- --></a>保存数据</dt>
+
+                            <dd class="dd pd">
+                                <p class="p">将接收到的数据保存到本地文本文件中。</p>
+
+                            </dd>
+
+                        
+                        
+                            <dt class="dt pt dlterm"><a name="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-B0EC1F64-945F-4969-9C1E-5B69320927CC"><!-- --></a>请除接收</dt>
+
+                            <dd class="dd pd">
+                                <p class="p">清空<span class="ph uicontrol">数据接收</span>区域的数据。</p>
+
+                            </dd>
+
+                        
+                    </dl>
+
+                </li>
+
+                <li class="li" id="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-CEF4140F-D452-4285-986F-C1B1C4E339A7">
+                    <p class="p">（可选）在<span class="ph uicontrol">发送区设置</span>区域，配置数据发送相关参数。</p>
+
+                    <dl class="dl parml">
+                        
+                            <dt class="dt pt dlterm"><a name="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-98C41BE9-7FDD-4DFD-8244-F49F42537E39"><!-- --></a>启用文件数据源</dt>
+
+                            <dd class="dd pd">
+                                <p class="p">是否将本地文件内容进行发送，开启后需选择存储数据的本地文本文件。</p>
+
+                            </dd>
+
+                        
+                        
+                            <dt class="dt pt dlterm"><a name="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-D58E440A-E2FB-4F0E-8D27-22F75C294564"><!-- --></a>自动发送附加位</dt>
+
+                            <dd class="dd pd">
+                                <p class="p">是否给发送数据添加附加位，开启后可配置附加位设置。</p>
+
+                            </dd>
+
+                        
+                        
+                            <dt class="dt pt dlterm"><a name="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-56F443BF-DD43-4A4B-BA59-D83CB31B9A90"><!-- --></a>发送完自动清空</dt>
+
+                            <dd class="dd pd">
+                                <p class="p">是否在数据发送完成后，自动清空<span class="ph uicontrol">数据发送</span>区域。</p>
+
+                            </dd>
+
+                        
+                        
+                            <dt class="dt pt dlterm"><a name="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-C976F4B3-4C95-4D95-B1CE-62868F156152"><!-- --></a>按十六进制发送</dt>
+
+                            <dd class="dd pd">
+                                <p class="p">是否将发送的数据转为十六进制发送。</p>
+
+                            </dd>
+
+                        
+                        
+                            <dt class="dt pt dlterm"><a name="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-F201500E-FBF9-4A11-A2AA-B9CBA4EC8FFE"><!-- --></a>发送周期</dt>
+
+                            <dd class="dd pd">
+                                <p class="p">是否配置时间间隔，并按照此时间间隔一致发送数据。</p>
+
+                            </dd>
+
+                        
+                        
+                            <dt class="dt pt dlterm"><a name="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-05466FEE-7704-467B-A8F1-37EAA76ABF80"><!-- --></a>文件载入</dt>
+
+                            <dd class="dd pd">
+                                <p class="p">读取本地文件内容并显示在发送区域，当做发送数据内容。</p>
+
+                            </dd>
+
+                        
+                        
+                            <dt class="dt pt dlterm"><a name="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-8F39FACF-A84A-4E9C-8DCB-07B3667B97FA"><!-- --></a>请除输入</dt>
+
+                            <dd class="dd pd">
+                                <p class="p">清空数据发送区域的数据。</p>
+
+                            </dd>
+
+                        
+                    </dl>
+
+                </li>
+
+                <li class="li" id="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-A31F01AF-E30B-4C50-AA26-6436B0D612BF">
+                    <p class="p">在主界面数据发送区域，输入待发送数据，单击<span class="ph uicontrol">发送</span>，完成数据发送。</p>
+
+                </li>
+
+                <li class="li" id="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-46A5AF8D-9FFE-47AC-8BEC-3976C8585F63">
+                    <p class="p">在<span class="ph uicontrol">数据接收</span>查看读码器发送给计算机的数据。</p>
+
+                </li>
+
+                <li class="li" id="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-DBCDB6BE-957C-4D25-96A8-11CEB6DCC687">
+                    <p class="p">（可选）在<span class="ph uicontrol">HID</span>区域，选择<span class="ph uicontrol">开</span>，开启焦点输出功能。</p>
+
+                    <p class="p">开启焦点输出功能后，会将收到的数据输出到鼠标焦点位置，可配置回车换行符、自定义分割符。</p>
+
+                </li>
+
+            </ol>
+
+        </div>
+
+        <div class="section" id="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-29B3332B-5E83-4EAB-8C2D-F6D9F8820A7A"><h2 class="title sectiontitle">USB驱动安装工具</h2>
+            
+            <p class="p">USB驱动安装工具用于在计算机上安装高性能驱动程序，以实现对USB接口读码器的正常枚举和稳定连接。</p>
+
+            <div class="note note" id="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-B7C8EE42-6D4B-4F09-9247-342C51C07690"><span class="notetitle">说明</span> 
+                <p class="p">当您在安装IDMVS时，在<span class="ph uicontrol">安装选项</span>页面勾选了<span class="ph uicontrol">USB
+                        3.0</span>，下文提到的USB驱动均会安装，无需重复安装。当您未勾选<span class="ph uicontrol">USB
+                        3.0</span>，后续又需使用USB接口读码器，请使用USB驱动安装工具安装驱动。</p>
+
+            </div>
+
+            <p class="p">使用USB驱动安装工具的操作步骤如下。</p>
+
+            <ol class="ol" id="GUID-57188285-513F-4A15-A243-358230FB8CD2__OL_GQ3_GQ3_WHC">
+                <li class="li" id="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-F0D6A266-D538-4038-8CD8-D95DF335FF3D">
+                    <p class="p">单击菜单栏的<span class="ph menucascade"><span class="ph uicontrol">工具</span> &gt; <span class="ph uicontrol">其他工具</span></span>，可自动跳转到USB驱动安装工具所在目录。目录下存在如下两种USB驱动。</p>
+
+                    <ul class="ul" id="GUID-57188285-513F-4A15-A243-358230FB8CD2__UL_EWW_4T3_WHC">
+                        <li class="li" id="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-15E0F2A0-76A1-422F-AA3B-20D152BAA58C">
+                            <p class="p"><span class="ph uicontrol">EliteDrivers</span>：USB接口极小型智能读码器专用驱动程序。</p>
+
+                        </li>
+
+                        <li class="li" id="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-7324C0F4-032A-4EA1-BFBF-8F7B17DFA844">
+                            <p class="p"><span class="ph uicontrol">usb_driver</span>：USB 3.0驱动程序。</p>
+
+                        </li>
+
+                    </ul>
+
+                </li>
+
+                <li class="li" id="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-E10420FC-FF55-45B5-9B37-F4B2DFAE57E0">
+                    <p class="p">进入<span class="ph uicontrol">EliteDrivers</span>文件夹，双击<span class="ph uicontrol">InstWiz3.exe</span>运行驱动安装程序。</p>
+
+                    <div class="note note" id="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-5B0A2AB7-3AA0-4419-8D78-BE895D300A25"><span class="notetitle">说明</span> 
+                        <ul class="ul" id="GUID-57188285-513F-4A15-A243-358230FB8CD2__UL_CKG_H53_WHC">
+                            <li class="li" id="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-6A33C25C-36C5-4388-A863-AFD13F941A0C">
+                                <p class="p">您也可通过命令行方式安装驱动，安装命令请参见文件夹中的“驱动安装程序使用说明.txt”文件。</p>
+
+                            </li>
+
+                            <li class="li" id="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-49A35A45-5FC6-4F1C-8E92-5986FCB3BDB1">
+                                <p class="p">在安装驱动程序之前请从USB接口上取下所有的设备，如果在连接设备的情况下安装，需要重新插拔后系统才可以正确识别设备。</p>
+
+                            </li>
+
+                            <li class="li" id="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-28F68265-BA41-4CCC-B7CD-ADD710DDD228">
+                                <p class="p">运行InstWiz3.exe时，务必保证同目录下包含mkSetup.dll、language.dll、win98目录、winlh64目录、winlh86目录、
+                                    winxp64目录和winxp86目录等全部内容，并保持原有的目录结构</p>
+
+                            </li>
+
+                        </ul>
+
+                    </div>
+
+                </li>
+
+                <li class="li" id="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-4C211EE8-F75F-42CC-A278-64484CD1902A">
+                    <p class="p">进入<span class="ph uicontrol">usb_driver</span>文件夹，双击<span class="ph uicontrol">Install.bat</span>运行驱动安装程序。</p>
+
+                    <div class="note note" id="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-AB3F3EF2-A0A8-4AED-B12C-1A1E6E4E5930"><span class="notetitle">说明</span> 
+                        <p class="p">当您要卸载USB 3.0驱动程序时，双击<span class="ph uicontrol">Uninstall.bat</span>运行驱动卸载程序。</p>
+
+                    </div>
+
+                </li>
+
+            </ol>
+
+        </div>
+
+</div>
+
+
+</div>
+						<div class=" wt_topic_wpp_content wt_pc_only "><div class=" wt_topic_wpp_content_flex "><div class="wt_topic_wpp_item like"></div><div class="wt_topic_wpp_item view"></div><div class="wt_topic_wpp_item share">分享</div></div></div>
+						
+						
+						
+					</div>
+				</div><!-- container_body -->
+				
+				<div class=" body_footer "><div onclick="prevTopic()" class=" body_footer_left link_button "><span>上一页</span></div><div onclick="nextTopic()" class=" body_footer_right link_button "><span>下一页</span></div></div>
+				<div class=" body_wpp mobile_only"><div class="wt_body_mobile_like"></div><div class="wt_body_mobile_view"></div></div>
+				<!-- <whc:webhelp_side_toc /> -->
+				
+			</div> <!-- middle_view content_area -->
+			<div class=" right_content wt_pc_only "><div class=" right_fixed_container "><div class="right_guide"><div class="feature_guide"><div>本页导航</div><ul><li onclick="scrollToAnchor($(this))" data-id="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-81272DA9-83F9-4703-8FBA-378C708E9126" class="feature_guide_h2"><span class="link_button">HIKTerm日志采集工具</span></li><li onclick="scrollToAnchor($(this))" data-id="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-9ECA26B5-85E8-4F28-8F00-5CC0F3760CEF" class="feature_guide_h2"><span class="link_button">IDPS工具</span></li><li onclick="scrollToAnchor($(this))" data-id="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-E6C6D622-52A8-495C-8A85-07C86CBF62F0" class="feature_guide_h2"><span class="link_button">网络调试工具</span></li><li onclick="scrollToAnchor($(this))" data-id="GUID-57188285-513F-4A15-A243-358230FB8CD2__GUID-29B3332B-5E83-4EAB-8C2D-F6D9F8820A7A" class="feature_guide_h2"><span class="link_button">USB驱动安装工具</span></li></ul></div></div></div></div>
+		</div> <!-- content_box -->
+		
+		<!-- 置顶按钮 -->
+		<div class="body_to_top" onclick="scrollTopicTop()"></div> 
+		<!-- 评价反馈 -->
+		<div onclick="manualFeedback()" class=" body_feedback " data-href="https://wj.hikvision.com/#/public-survey?id=64c8b90d80e02e9e88feca2f"></div>
+		
+	</body>
+</html>
