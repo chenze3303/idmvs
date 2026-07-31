@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IDMVS 文档搜索</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+  background: #0f1923;
+  color: #e0e6ed;
+  min-height: 100vh;
+}
+
+/* Header */
+.header {
+  background: linear-gradient(135deg, #1a2a3a 0%, #0d2137 100%);
+  border-bottom: 1px solid rgba(64,158,255,0.2);
+  padding: 20px 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(10px);
+}
+.header-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  white-space: nowrap;
+}
+.logo-icon {
+  width: 42px;
+  height: 42px;
+  background: linear-gradient(135deg, #409eff, #1677ff);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(64,158,255,0.3);
+}
+.logo-text {
+  font-size: 18px;
+  font-weight: 600;
+  color: #e8f0fe;
+}
+.logo-sub {
+  font-size: 11px;
+  color: #7a8fa6;
+  margin-top: 2px;
+}
+
+/* Search */
+.search-box {
+  flex: 1;
+  position: relative;
+}
+.search-input {
+  width: 100%;
+  padding: 12px 20px 12px 48px;
+  border: 2px solid rgba(64,158,255,0.25);
+  border-radius: 12px;
+  background: rgba(255,255,255,0.06);
+  color: #e0e6ed;
+  font-size: 15px;
+  outline: none;
+  transition: all 0.3s;
+}
+.search-input::placeholder { color: #5a6d80; }
+.search-input:focus {
+  border-color: #409eff;
+  background: rgba(255,255,255,0.1);
+  box-shadow: 0 0 0 4px rgba(64,158,255,0.15);
+}
+.search-icon {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #5a6d80;
+  font-size: 18px;
+}
+.search-stats {
+  font-size: 12px;
+  color: #5a6d80;
+  margin-top: 8px;
+  text-align: right;
+}
+
+/* Main layout */
+.main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+  display: flex;
+  gap: 24px;
+  min-height: calc(100vh - 100px);
+}
+
+/* Results list */
+.results-panel {
+  width: 400px;
+  flex-shrink: 0;
+  overflow-y: auto;
+  max-height: calc(100vh - 120px);
+  padding-right: 8px;
+}
+.results-panel::-webkit-scrollbar { width: 6px; }
+.results-panel::-webkit-scrollbar-thumb { background: rgba(64,158,255,0.3); border-radius: 3px; }
+
+.result-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.result-card:hover {
+  background: rgba(64,158,255,0.08);
+  border-color: rgba(64,158,255,0.3);
+  transform: translateX(4px);
+}
+.result-card.active {
+  background: rgba(64,158,255,0.12);
+  border-color: #409eff;
+  box-shadow: 0 0 0 2px rgba(64,158,255,0.2);
+}
+.result-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #e8f0fe;
+  margin-bottom: 6px;
+  line-height: 1.4;
+}
+.result-breadcrumb {
+  font-size: 11px;
+  color: #5a6d80;
+  margin-bottom: 6px;
+}
+.result-desc {
+  font-size: 13px;
+  color: #8a9bb0;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.result-media-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  color: #409eff;
+  margin-top: 8px;
+  background: rgba(64,158,255,0.1);
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+/* Detail panel */
+.detail-panel {
+  flex: 1;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  overflow-y: auto;
+  max-height: calc(100vh - 120px);
+  padding: 28px;
+}
+.detail-panel::-webkit-scrollbar { width: 6px; }
+.detail-panel::-webkit-scrollbar-thumb { background: rgba(64,158,255,0.3); border-radius: 3px; }
+
+.detail-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #3a4f63;
+}
+.detail-empty-icon { font-size: 64px; margin-bottom: 16px; opacity: 0.5; }
+.detail-empty-text { font-size: 16px; }
+
+.detail-breadcrumb {
+  font-size: 12px;
+  color: #5a6d80;
+  margin-bottom: 12px;
+  padding: 6px 12px;
+  background: rgba(255,255,255,0.03);
+  border-radius: 6px;
+  border-left: 3px solid #409eff;
+}
+.detail-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #e8f0fe;
+  margin-bottom: 16px;
+  line-height: 1.4;
+}
+.detail-desc {
+  font-size: 14px;
+  color: #b0c0d0;
+  line-height: 1.8;
+  margin-bottom: 24px;
+  padding: 16px;
+  background: rgba(255,255,255,0.03);
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.06);
+}
+.detail-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #409eff;
+  text-decoration: none;
+  font-size: 13px;
+  padding: 8px 16px;
+  border: 1px solid rgba(64,158,255,0.3);
+  border-radius: 8px;
+  transition: all 0.2s;
+  margin-bottom: 24px;
+}
+.detail-link:hover {
+  background: rgba(64,158,255,0.1);
+  border-color: #409eff;
+}
+
+/* Media gallery */
+.media-section { margin-top: 20px; }
+.media-section-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #8a9bb0;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.media-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 12px;
+}
+.media-item {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: all 0.2s;
+}
+.media-item:hover {
+  border-color: rgba(64,158,255,0.4);
+  transform: scale(1.02);
+}
+.media-item img {
+  width: 100%;
+  height: auto;
+  display: block;
+  cursor: pointer;
+}
+.media-item video {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.media-label {
+  padding: 8px 12px;
+  font-size: 11px;
+  color: #5a6d80;
+  word-break: break-all;
+}
+
+/* Lightbox */
+.lightbox {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.9);
+  z-index: 1000;
+  cursor: zoom-out;
+  justify-content: center;
+  align-items: center;
+}
+.lightbox.show { display: flex; }
+.lightbox img {
+  max-width: 95vw;
+  max-height: 95vh;
+  object-fit: contain;
+  border-radius: 4px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .main { flex-direction: column; }
+  .results-panel { width: 100%; max-height: 40vh; }
+  .detail-panel { max-height: 60vh; }
+  .header-inner { flex-wrap: wrap; }
+  .media-grid { grid-template-columns: 1fr; }
+}
+
+/* Highlight */
+mark {
+  background: rgba(64,158,255,0.3);
+  color: #e8f0fe;
+  padding: 0 2px;
+  border-radius: 2px;
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <div class="logo">
+      <div class="logo-icon">ID</div>
+      <div>
+        <div class="logo-text">IDMVS 文档搜索</div>
+        <div class="logo-sub">海康机器人 · 智能读码器管理与可视化软件</div>
+      </div>
+    </div>
+    <div class="search-box">
+      <span class="search-icon">🔍</span>
+      <input class="search-input" id="searchInput" type="text" placeholder="输入关键词搜索功能、配置、操作说明..." autocomplete="off">
+      <div class="search-stats" id="searchStats"></div>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+  <div class="results-panel" id="resultsPanel">
+    <div class="result-card" style="text-align:center;color:#5a6d80;padding:40px;">
+      输入关键词开始搜索
+    </div>
+  </div>
+  <div class="detail-panel" id="detailPanel">
+    <div class="detail-empty">
+      <div class="detail-empty-icon">📖</div>
+      <div class="detail-empty-text">选择左侧文档查看详情</div>
+    </div>
+  </div>
+</div>
+
+<div class="lightbox" id="lightbox" onclick="this.classList.remove('show')">
+  <img id="lightboxImg" src="">
+</div>
+
+<script>
+const DATA = [{"guid": "GUID-02BC73C2-5CA2-4D34-8B18-52CDA1103144", "filename": "GUID-02BC73C2-5CA2-4D34-8B18-52CDA1103144.html", "title": "评估码质量", "description": "IDMVS支持评估一维码、二维码和堆叠码的质量，确保其可读性和可靠性。适用于读码调试、生产线集成和质量控制等场景，有助于提高读码准确性。", "breadcrumb": "读码器高级配置 > 评估码质量", "bodyText": "IDMVS支持评估一维码、二���码和堆叠码的质量，确保其可读性和可靠性。适用于读码调试、生产线集成和质量控制等场景，有助于提高读码准确性。", "media": []}, {"guid": "GUID-0379FFCE-314B-49B6-944C-5FF95ED15965", "filename": "GUID-0379FFCE-314B-49B6-944C-5FF95ED15965.html", "title": "日志", "description": "通过菜单栏的日志可查看SDK日志、读码器日志、读码器安全日志和本地日志，同时部分日志支持导出。", "breadcrumb": "菜单栏相关介绍 > 日志", "bodyText": "通过菜单栏的", "media": []}, {"guid": "GUID-0B05B797-9EF5-4856-8C96-EF6DDC41375E", "filename": "GUID-0B05B797-9EF5-4856-8C96-EF6DDC41375E.html", "title": "V5.0.0及之后", "description": "本章节介绍V5.0.0及之后版本IDMVS功能更新动态。", "breadcrumb": "发版说明 > V5.0.0及之后", "bodyText": "本章节介绍V5.0.0及之后版本IDMVS功能更新动态。", "media": []}, {"guid": "GUID-0E3F63F7-AD74-42C9-A021-A8AE212797C3", "filename": "GUID-0E3F63F7-AD74-42C9-A021-A8AE212797C3.html", "title": "客户端连接读码器失败", "description": "IDMVS连接读码器失败，可能和读码器当前状态有关。", "breadcrumb": "问题排查 > 连接问题排查 > 客户端连接读码器失败", "bodyText": "IDMVS连接读码器失败，可能和读码器当前状态有关。", "media": []}, {"guid": "GUID-0FC6A8A9-8D09-4B7E-8F3D-D5E74C6CCDE5", "filename": "GUID-0FC6A8A9-8D09-4B7E-8F3D-D5E74C6CCDE5.html", "title": "主从", "description": "多读码器主从组网由一个主读码器和多个从读码器组成，实现多读码器协同工作。本节以两个读码器为例为您介绍如何配置主从组网。", "breadcrumb": "读码器高级配置 > 配置多读码器同步 > 主从", "bodyText": "多读码器主从组网由一个主读码器和多个从读码器组成，实现多读码器协同工作。本节以两个读码器为例为您介绍如何配置主从组网。", "media": [{"path": "GUID-8A1D99F8-951D-4BCE-B92C-C2930C5E7AD3-high.png", "type": "image"}, {"path": "GUID-4FCB1471-E5FE-4D7F-A1E8-03DC75787ECC-high.png", "type": "image"}, {"path": "GUID-C2880C25-FDF6-4E07-8977-CB3B6FBCCBE5-high.png", "type": "image"}, {"path": "GUID-16D2F1BE-1FBE-48AA-99B5-D0ACBCC84F54-high.gif", "type": "image"}, {"path": "GUID-B6494558-0621-4454-8852-92788683D178-high.png", "type": "image"}]}, {"guid": "GUID-146B084D-D47B-4019-A905-4757E09BF82D", "filename": "GUID-146B084D-D47B-4019-A905-4757E09BF82D.html", "title": "字符替换", "description": "字符替换功能支持对读码器读取的条码内容进行指定字符替换或大小写转换，实现读码内容的标准化输出。", "breadcrumb": "读码器常用配置 > 处理输出数据 > 字符替换", "bodyText": "", "media": [{"path": "GUID-B554B973-82D1-4392-A179-4FEF9CA875F3-high.png", "type": "image"}, {"path": "GUID-ECAC2D8F-07A4-480D-9E53-680CDED921C7-high.png", "type": "image"}, {"path": "GUID-B6494558-0621-4454-8852-92788683D178-high.png", "type": "image"}, {"path": "GUID-D03F6F13-6DB5-4E40-8D89-4190210BBC7E-high.png", "type": "image"}]}, {"guid": "GUID-15D9C504-D623-4171-8E27-DC79665551B5", "filename": "GUID-15D9C504-D623-4171-8E27-DC79665551B5.html", "title": "ASCII码", "description": "读码器在读取条形码或二维码后，会将编码信息转换为ASCII码形式的数据，以便通过串口（如RS-232）、USB或以太网等接口传输到其他设备（如PLC、计算机或数据库）。", "breadcrumb": "ASCII码", "bodyText": "读码器在读取条形码或二维码后，会将编码信息转换为ASCII码形式的数据，以便通过串口（如RS-232）、USB或以太网等接口传输到其他设备（如PLC、计算机或数据库）。", "media": []}, {"guid": "GUID-18029E9E-3083-437A-B970-24EE067E6132", "filename": "GUID-18029E9E-3083-437A-B970-24EE067E6132.html", "title": "处理输出数据", "description": "当读码器读码成功后，您可以定义读码结果的输出内容和格式、过滤无效码数据，以提升数据的精简性和有效性。", "breadcrumb": "读码器常用配置 > 处理输出数据", "bodyText": "当读码器读码成功后，您可以定义读码结果的输出内容和格式、过滤无效码数据，以提升数据的精简性和有效性。", "media": []}, {"guid": "GUID-18C24CEB-99B7-49D3-A8DD-D9019F4D34CD", "filename": "GUID-18C24CEB-99B7-49D3-A8DD-D9019F4D34CD.html", "title": "常见问题", "description": "本章节介绍关于IDMVS使用过程中的一些常见问题。", "breadcrumb": "常见问题", "bodyText": "本章节介绍关于IDMVS使用过程中的一些常见问题。", "media": []}, {"guid": "GUID-1A53AA13-DB93-4147-BA8B-1ABDF926885C", "filename": "GUID-1A53AA13-DB93-4147-BA8B-1ABDF926885C.html", "title": "手册阅读推荐", "description": "本章节旨在帮助您增加对本文档的了解，方便您能快速找到对应章节，从而了解如何通过IDMVS实现对读码器功能的设置。", "breadcrumb": "手册阅读推荐", "bodyText": "本章节旨在帮助您增加对本文档的了解，方便您能快速找到对应章节，从而了解如何通过IDMVS实现对读码器功能的设置。", "media": []}, {"guid": "GUID-1EEE9544-2504-4B35-8C81-8F6D103660EA", "filename": "GUID-1EEE9544-2504-4B35-8C81-8F6D103660EA.html", "title": "输入", "description": "当读码器与其他外部设备交互时，IDMVS中的输入模块可对读码器的输入信号进行设置和管理，包括触发设置和停止触发相关设置。", "breadcrumb": "读码器常用配置 > 配置输入/输出 > 输入", "bodyText": "当读码器与其他外部设备交互时，IDMVS中的输入模块可对读码器的输入信号进行设置和管理，包括触发设置和停止触发相关设置。", "media": []}, {"guid": "GUID-1FD49EC0-F215-424C-9EE7-76B06BFD2B20", "filename": "GUID-1FD49EC0-F215-424C-9EE7-76B06BFD2B20.html", "title": "Lua脚本", "description": "Lua脚本功能赋予IDMVS高度的灵活性和可扩展性，适用于读码逻辑定制、数据处理与分析、相机行为控制、设备交互等场景，实现自动化和智能化的图像采集与处理。", "breadcrumb": "读码器高级配置 > Lua脚本", "bodyText": "Lua脚本功能赋予IDMVS高度的灵活性和可扩展性，适用于读码逻辑定制、数据处理与分析、相机行为控制、设备交互等场景，实现自动化和智能化的图像采集与处理。", "media": []}, {"guid": "GUID-21B3A40E-B9C5-4E52-9B37-A2B6A4C7194D", "filename": "GUID-21B3A40E-B9C5-4E52-9B37-A2B6A4C7194D.html", "title": "通过UDP通信方式", "description": "读码器支持通过UDP协议进行通信，实际使用时需配置客户端及调试工具的通信参数，实现设备与PC端的数据互通。", "breadcrumb": "通信指令 > 通过UDP通信方式", "bodyText": "读码器支持通过UDP协议进行通信，实际使用时需配置客户端及调试工具的通信参数，实现设备与PC端的数据互通。", "media": []}, {"guid": "GUID-21C0803F-EF87-4EAA-BC52-FAC22DE80023", "filename": "GUID-21C0803F-EF87-4EAA-BC52-FAC22DE80023.html", "title": "通用", "description": "通用可对读码器刷新和本机PC播放声音进行相关设置。", "breadcrumb": "菜单栏相关介绍 > 设置 > 通用", "bodyText": "", "media": [{"path": "GUID-29783162-478A-4E1E-835F-8B308C5A02BC-high.png", "type": "image"}]}, {"guid": "GUID-276CE1BF-C371-4B01-BECD-22E11EBF00D8", "filename": "GUID-276CE1BF-C371-4B01-BECD-22E11EBF00D8.html", "title": "普通过滤", "description": "过滤规则模块支持设置普通规则对条码进行简单的过滤操作，适用于基本的筛选需求，例如只需要根据条码长度或固定位置的字符进行过滤的情况。", "breadcrumb": "读码器常用配置 > 处理输出数据 > 过滤排序 > 普通过滤", "bodyText": "过滤规则模块支持设置普通规则对条码进行简单的过滤操作，适用于基本的筛选需求，例如只需要根据条码长度或固定位置的字符进行过滤的情况。", "media": [{"path": "GUID-081C53AD-CB63-45A6-A5D4-F16C05EE42AC-high.png", "type": "image"}]}, {"guid": "GUID-2B44A318-9C5F-426A-9149-25867EDB0B14", "filename": "GUID-2B44A318-9C5F-426A-9149-25867EDB0B14.html", "title": "成像配置", "description": "成像配置模块提供全面且精细的成像参数调整功能，可在此调整图像、光源、自适应、调焦等相关参数，以获得最佳的图像效果。", "breadcrumb": "读码器常用配置 > 调试图像及码制 > 成像配置", "bodyText": "成像配置模块提供全面且精细的成像参数调整功能，可在此调整图像、光源、自适应、调焦等相关参数，以获得最佳的图像效果。", "media": [{"path": "GUID-95CD9FAC-5BDA-4555-9D14-6F857618E6F0-high.png", "type": "image"}, {"path": "GUID-C2960969-7C93-4A35-B99E-9B1194CCB0C2-high.png", "type": "image"}]}, {"guid": "GUID-2C58E11C-E65A-48E7-BE49-8F58FADBE3B6", "filename": "GUID-2C58E11C-E65A-48E7-BE49-8F58FADBE3B6.html", "title": "IDMVS功能相关", "description": "客户端连接读码器后可以正常触发拍照，为什么关闭客户端就不能正常触发拍照了？ 因为未开启读码器的 相机自动工作 功能，详情参见 连接后配置 章节。 客户端打开自动工作并保存参数，是否需要重启读码器生效？ 无需重启，IDMVS断开对读码器的连接即可。 读码器如何通过客户端恢复出厂设置？ 目前仅全功能型(Mini)智能读码器和V4.0.0及以上版本固件的全功能型智能读码器支持恢复出厂设置。 ...", "breadcrumb": "常见问题 > IDMVS功能相关", "bodyText": "", "media": []}, {"guid": "GUID-2CAE75AC-5572-4379-9CB6-8887291D7314", "filename": "GUID-2CAE75AC-5572-4379-9CB6-8887291D7314.html", "title": "产品概述", "description": "IDMVS是海康机器人专为智能读码器设计、且全自主开发的应用软件，支持对全系列智能读码器进行调试，包括固定式、手持式、嵌入式等多种形态的读码器。IDMVS支持对读码器进行对焦、图像及码制参数设置、通讯配置、数据处理、IO设置等操作。IDMVS整体配置流程清晰，功能集中，可进行沉浸式配置，轻松实现用户的调试目标。", "breadcrumb": "产品概述", "bodyText": "IDMVS是", "media": []}, {"guid": "GUID-35355DBC-2DCD-4CFB-8FAD-7D41900C2563", "filename": "GUID-35355DBC-2DCD-4CFB-8FAD-7D41900C2563.html", "title": "动态场景下读码率低", "description": "当动态场景下读码器读码率低时，可从帧率、算法耗时、整体方案设计尝试解决。", "breadcrumb": "问题排查 > 条码识别与输出问题排查 > 动态场景下读码率低", "bodyText": "当动态场景下读码器读码率低时，可从帧率、算法耗时、整体方案设计尝试解决。", "media": []}, {"guid": "GUID-35799125-E661-4BFB-88A3-146B20B29FF9", "filename": "GUID-35799125-E661-4BFB-88A3-146B20B29FF9.html", "title": "读码器功能/特性相关", "description": "读码器开启相机自动工作后，相机设置的触发模式是什么？ 建议连接IDMVS进行查看，在设置参数时是有可能更改模式的。或者可以通过光源进行判断，光源如果在频闪，触发模式为关闭。 为什么8mm焦距的读码器自适应调节速度比16mm焦距的快？ 8 mm焦距相比于16 mm焦距，曝光、工作距离等适应条件较好，因此自适应调节的速度相对更快一点。 读码的视野范围可以通过参数调整吗? ...", "breadcrumb": "常见问题 > 读码器功能/特性相关", "bodyText": "", "media": []}, {"guid": "GUID-3C3D7CEB-6F13-4517-9ABE-D4CEE71593D8", "filename": "GUID-3C3D7CEB-6F13-4517-9ABE-D4CEE71593D8.html", "title": "结果显示", "description": "结果显示可对图像预览区域中读取结果的显示进行设置。", "breadcrumb": "菜单栏相关介绍 > 设置 > 结果显示", "bodyText": "", "media": [{"path": "GUID-67E61959-87C8-49BA-989A-A3899E6D3B8E-high.png", "type": "image"}, {"path": "GUID-25861822-9113-4035-B16F-EB451F8A3D99-high.png", "type": "image"}, {"path": "GUID-4CDC18B7-8E48-4A6D-BF91-9CEC62C1754D-high.png", "type": "image"}]}, {"guid": "GUID-3DB7E507-E5C7-4C2A-B240-161451642011", "filename": "GUID-3DB7E507-E5C7-4C2A-B240-161451642011.html", "title": "脚本接口", "description": "IDMVS提供涵盖码数据、评级数据、统计数据、数据处理等模块的接口函数。通过调用接口函数，可以更加便捷、高效地实现读码器的功能扩展。", "breadcrumb": "读码器高级配置 > Lua脚本 > 脚本接口", "bodyText": "IDMVS提供涵盖码数据、评级数据、统计数据、数据处理等模块的接口函数。通过调用接口函数，可以更加便捷、高效地实现读码器的功能扩展。", "media": []}, {"guid": "GUID-3F138232-3CF2-4E3F-A3C0-3D677CF174B5", "filename": "GUID-3F138232-3CF2-4E3F-A3C0-3D677CF174B5.html", "title": "读码器高级配置", "description": "如您有更高阶的应用需求，例如多视角检测、条码质量评级、自定义通讯控制命令和自定义数据处理逻辑等，可通过参考本章节下的配置多读码器同步、评估码质量、通讯控制、Lua脚本章节进行配置。", "breadcrumb": "读码器高级配置", "bodyText": "如您有更高阶的应用需求，例如多视角检测、条码质量评级、自定义通讯控制命令和自定义数据处理逻辑等，可通过参考本章节下的配置多读码器同步、评估码质量、通讯控制、Lua脚本章节进行配置。", "media": []}, {"guid": "GUID-4242C723-8DEA-47BA-B1FE-591CCDABE40D", "filename": "GUID-4242C723-8DEA-47BA-B1FE-591CCDABE40D.html", "title": "配置调试工具", "description": "通过UDP调试工具的网络设置模块，配置读码器通信指令参数。", "breadcrumb": "通信指令 > 通过UDP通信方式 > 配置调试工具", "bodyText": "通过UDP调试工具的", "media": []}, {"guid": "GUID-42AF9F7D-DB4E-4E3E-80F3-272D764FE5D8", "filename": "GUID-42AF9F7D-DB4E-4E3E-80F3-272D764FE5D8.html", "title": "预览图像", "description": "客户端支持通过图像预览区查看读码器采集的实时图像。", "breadcrumb": "读码器采图及读码 > 预览图像", "bodyText": "客户端支持通过图像预览区查看读码器采集的实时图像。", "media": [{"path": "GUID-26DE7DBD-E962-4FFE-99AC-E8CF116EEB5C-high.png", "type": "image"}, {"path": "GUID-9E3CE4FA-F2B2-4E4D-B44A-BEEFBB50DEEE-high.png", "type": "image"}, {"path": "GUID-9FE9B0C5-CFE1-43D5-8C02-E521C621C1BD-high.png", "type": "image"}, {"path": "GUID-4BB2F4ED-4AE8-42CD-B6A7-2FC6E09D420B-high.png", "type": "image"}, {"path": "GUID-82C0151E-40F4-4C70-9088-056138B889A6-high.png", "type": "image"}, {"path": "GUID-D51AAD6E-F0ED-49FE-AA43-CADAB1C732EB-high.png", "type": "image"}, {"path": "GUID-59326C81-8180-4DFB-A0BA-B94D3D2DA7F0-high.png", "type": "image"}, {"path": "GUID-A4BACC9F-6281-4A10-95D7-AB54091370FB-high.png", "type": "image"}, {"path": "GUID-83C8FB41-6B0C-4B32-82BA-6610E4EF8054-high.png", "type": "image"}, {"path": "GUID-9682851B-DC95-407E-9CF8-AF9A51EF49A2-high.png", "type": "image"}, {"path": "GUID-32CF257F-F445-4361-9EAC-A989EBB31F97-high.png", "type": "image"}, {"path": "GUID-32CF257F-F445-4361-9EAC-A989EBB31F97-high.png", "type": "image"}, {"path": "GUID-31D27300-897F-42B4-9F3F-3FAB431559C1-high.png", "type": "image"}, {"path": "GUID-FC821B88-2A2F-4056-8DAB-F16707B43585-high.png", "type": "image"}, {"path": "GUID-CAE3AB92-6AE7-48F7-8009-7BD59B695D08-high.png", "type": "image"}, {"path": "GUID-CAE3AB92-6AE7-48F7-8009-7BD59B695D08-high.png", "type": "image"}, {"path": "GUID-CAE3AB92-6AE7-48F7-8009-7BD59B695D08-high.png", "type": "image"}, {"path": "GUID-CAE3AB92-6AE7-48F7-8009-7BD59B695D08-high.png", "type": "image"}, {"path": "GUID-CAE3AB92-6AE7-48F7-8009-7BD59B695D08-high.png", "type": "image"}, {"path": "GUID-AF3635FF-A92B-4F99-90D7-9910D1658698-high.gif", "type": "image"}, {"path": "GUID-6A51178E-A970-435E-A275-03501EFF98F9-high.png", "type": "image"}, {"path": "GUID-65557AF9-163D-4353-B017-FBD90D5669BB-high.png", "type": "image"}, {"path": "GUID-FFB7A7DD-6D0F-4D18-ACAD-75AF7034D48A-high.png", "type": "image"}, {"path": "GUID-92E2F06D-BEF4-46E6-9723-F91E7FAC8629-high.png", "type": "image"}, {"path": "GUID-7406AF8F-2E12-4631-8225-592DF2C658A0-high.gif", "type": "image"}, {"path": "GUID-19B6731E-8835-466B-B1E8-69BF7C314B94-high.png", "type": "image"}, {"path": "GUID-19B6731E-8835-466B-B1E8-69BF7C314B94-high.png", "type": "image"}, {"path": "GUID-0946FD1C-1E4E-4164-A337-2740679956CC-high.mp4", "type": "video"}]}, {"guid": "GUID-44A11461-F97D-485F-8DC5-7E57777B1F8C", "filename": "GUID-44A11461-F97D-485F-8DC5-7E57777B1F8C.html", "title": "发现读码器", "description": "完成准备工作后，可通过“自动/手动刷新”或“远程添加”两种方式在设备列表发现读码器。前者适用于读码器和PC位于同一网段的场景，后者适用于读码器和PC不在同一网段但IP地址能ping通的场景。", "breadcrumb": "读码器连接 > 发现读码器", "bodyText": "完成准备工作后，可通过“自动/手动刷新”或“远程添加”两种方式在设备列表发现读码器。前者适用于读码器和PC位于同一网段的场景，后者适用于读码器和PC不在同一网段但IP地址能ping通的场景。", "media": [{"path": "GUID-29783162-478A-4E1E-835F-8B308C5A02BC-high.png", "type": "image"}, {"path": "GUID-35DE04B1-B14A-4F47-BA3D-37B02051469D-high.png", "type": "image"}, {"path": "GUID-84E81830-64B5-4A51-BBE8-DFD9CEBC0F27-high.png", "type": "image"}, {"path": "GUID-B216AF9D-F003-4566-BDDF-EE5483813D7A-high.png", "type": "image"}, {"path": "GUID-51D1D885-8B2F-4157-9698-97EACE06558C-high.png", "type": "image"}, {"path": "GUID-1F51EB4C-65C9-421C-9494-747A2DBC1F7C-high.png", "type": "image"}, {"path": "GUID-54D0EA7E-4095-46C8-9641-3F175D20357E-high.png", "type": "image"}, {"path": "GUID-08022227-0FC9-4DCE-BD47-945C0CF020D8-high.png", "type": "image"}, {"path": "GUID-905CED3D-5FDD-4C37-B8A9-78D03FB4C01B-high.png", "type": "image"}]}, {"guid": "GUID-491CB1A8-C3FC-402B-BCCC-5E1499C71CBA", "filename": "GUID-491CB1A8-C3FC-402B-BCCC-5E1499C71CBA.html", "title": "二维码打码评级", "description": "打码评级功能支持对采集到的二维码图像进行质量评估和等级评分。二维码打码评级功能通过ISO15415、ISO29158标准，分别从 9 个方面对条码进行判断， 选取所有评判标准中最低的等级作为条码的等级判断结果。", "breadcrumb": "读码器高级配置 > 评估码质量 > 二维码打码评级", "bodyText": "打码评级功能支持对采集到的二维码图像进行质量评估和等级评分。二维码打码评级功能通过ISO15415、ISO29158标准，分别从 9\n        个方面对条码进行判断， 选取所有评判标准中最低的等级作为条码的等级判断结果。", "media": [{"path": "GUID-18D37543-4D2C-4488-AAA4-94456E976090-high.png", "type": "image"}, {"path": "GUID-7D85822C-E88E-4FCF-A790-ACD24F887930-high.png", "type": "image"}]}, {"guid": "GUID-49D55A7D-A6F0-42CB-9022-C9BA325860F8", "filename": "GUID-49D55A7D-A6F0-42CB-9022-C9BA325860F8.html", "title": "法律声明", "description": "版权所有©杭州海康机器人股份有限公司2026。保留一切权利。 本手册的任何部分，包括文字、图片、图形等均归属于杭州海康机器人股份有限公司或其关联公司（以下简称“海康机器人”）。未经书面许可，任何单位或个人不得以任何方式摘录、复制、翻译、修改本手册的全部或部分。除非另有约定，海康机器人不对本手册提供任何明示或默示的声明或保证。 关于本产品 ...", "breadcrumb": "法律声明", "bodyText": "", "media": [{"path": "GUID-DFF6B6B1-30CA-4449-BDFD-543B3BF3F33E-high.png", "type": "image"}]}, {"guid": "GUID-4CFF5E7B-A983-41D0-8F97-690E1ED31AC8", "filename": "GUID-4CFF5E7B-A983-41D0-8F97-690E1ED31AC8.html", "title": "条码识别与输出问题排查", "description": "本节介绍如何解决读码器条码识别、数据输出方面遇到的异常情况。", "breadcrumb": "问题排查 > 条码识别与输出问题排查", "bodyText": "本节介绍如何解决读码器条码识别、数据输出方面遇到的异常情况。", "media": []}, {"guid": "GUID-4DBB565F-7091-4EF8-B659-805E5CA7C1DD", "filename": "GUID-4DBB565F-7091-4EF8-B659-805E5CA7C1DD.html", "title": "条码数据输出时间较长", "description": "当IDMVS输出条码数据时间较长时，主要和读码的设置、过滤规则等有关。", "breadcrumb": "问题排查 > 条码识别与输出问题排查 > 条码数据输出时间较长", "bodyText": "当IDMVS输出条码数据时间较长时，主要和读码的设置、过滤规则等有关。", "media": []}, {"guid": "GUID-4DF87BED-D50A-45D4-9058-79F4FD96840C", "filename": "GUID-4DF87BED-D50A-45D4-9058-79F4FD96840C.html", "title": "通过TCP通信方式", "description": "读码器支持通过TCP协议进行通信，实际使用时需配置客户端及调试工具的通信参数，实现设备与PC端的数据互通。", "breadcrumb": "通信指令 > 通过TCP通信方式", "bodyText": "读码器支持通过TCP协议进行通信，实际使用时需配置客户端及调试工具的通信参数，实现设备与PC端的数据互通。", "media": []}, {"guid": "GUID-4DFCF939-2236-40F3-BC02-06C1F13739F0", "filename": "GUID-4DFCF939-2236-40F3-BC02-06C1F13739F0.html", "title": "图像预览问题排查", "description": "本节介绍如何解决IDMVS预览读码器画面时遇到的异常情况。", "breadcrumb": "问题排查 > 图像预览问题排查", "bodyText": "本节介绍如何解决IDMVS预览读码器画面时遇到的异常情况。", "media": []}, {"guid": "GUID-4EFCB13F-13C4-4288-A2D0-9CD02A602E24", "filename": "GUID-4EFCB13F-13C4-4288-A2D0-9CD02A602E24.html", "title": "相机存图", "description": "相机存图是指读码器将图像存储到自身内置的存储介质中。", "breadcrumb": "读码器采图及读码 > 保存图像 > 相机存图", "bodyText": "", "media": []}, {"guid": "GUID-50E51181-457D-445C-8A50-A2386441C07B", "filename": "GUID-50E51181-457D-445C-8A50-A2386441C07B.html", "title": "连接后配置", "description": "完成设备连接后，可通过右键单击读码器名称等方式配置设备基础功能、设备控制功能、IP固定和防占用功能。", "breadcrumb": "读码器连接 > 连接后配置", "bodyText": "完成设备连接后，可通过右键单击读码器名称等方式配置设备基础功能、设备控制功能、IP固定和防占用功能。", "media": [{"path": "GUID-1809005F-61F0-4000-ACB8-45A647E4A81E-high.png", "type": "image"}, {"path": "GUID-21CC24A8-3CE8-4E56-8F0B-900C3C17EE5C-high.png", "type": "image"}, {"path": "GUID-8FC02872-98C2-41E3-9C76-8E74D277963E-high.png", "type": "image"}, {"path": "GUID-4D3F9A88-82A1-4F38-9123-158B8365F81A-high.png", "type": "image"}, {"path": "GUID-41FD9A32-3CBF-4D23-8302-BAE1E6DE0A29-high.png", "type": "image"}]}, {"guid": "GUID-5264E9B3-93FE-419C-B2B2-36AFEF98E781", "filename": "GUID-5264E9B3-93FE-419C-B2B2-36AFEF98E781.html", "title": "读码器采图及读码", "description": "客户端连接读码器后，可进行图像采集和读码。本章节将分步指导您进行读码器采图、调试、开始读码工作、预览图像并查看读码结果、保存图像和参数。", "breadcrumb": "读码器采图及读码", "bodyText": "客户端连接读码器后，可进行图像采集和读码。本章节将分步指导您进行读码器采图、调试、开始读码工作、预览图像并查看读码结果、保存图像和参数。", "media": []}, {"guid": "GUID-57188285-513F-4A15-A243-358230FB8CD2", "filename": "GUID-57188285-513F-4A15-A243-358230FB8CD2.html", "title": "其他工具", "description": "除前文所述工具外，IDMVS还支持HIKTerm日志采集工具、IDPS工具、网络调试工具和USB驱动安装工具。", "breadcrumb": "菜单栏相关介绍 > 工具 > 其他工具", "bodyText": "", "media": [{"path": "GUID-AA27F92F-73A6-4F2E-B345-1AE1CBC854E3-high.png", "type": "image"}, {"path": "GUID-74715166-A9E5-49F1-9867-64D93DE3AD28-high.png", "type": "image"}, {"path": "GUID-1639A1EF-F27F-400D-9C5D-1003403E64EB-high.png", "type": "image"}, {"path": "GUID-A531EA59-C042-48C6-B97A-DC87335C77B7-high.png", "type": "image"}, {"path": "GUID-34E9EB3B-1380-460C-8A5D-AF6C3BF4A685-high.png", "type": "image"}, {"path": "GUID-2713F437-F568-4A10-BF89-598D5EDAD154-high.png", "type": "image"}]}, {"guid": "GUID-5E284150-1F02-4ED0-9DFF-AA638F0F3108", "filename": "GUID-5E284150-1F02-4ED0-9DFF-AA638F0F3108.html", "title": "读码器日志", "description": "读码器日志主要用于查看读码器自身的日志信息。一般在使用读码器遇到问题时，可尝试通过读码器日志查看问题原因。", "breadcrumb": "菜单栏相关介绍 > 日志 > 读码器日志", "bodyText": "", "media": [{"path": "GUID-5862F9FB-FD8A-40B9-B4AF-825032C9159A-high.png", "type": "image"}]}, {"guid": "GUID-5FAEA566-8DC0-49F7-B0CF-FA3D5355B95D", "filename": "GUID-5FAEA566-8DC0-49F7-B0CF-FA3D5355B95D.html", "title": "查看读码结果", "description": "单击读取设置的开始工作或单次触发后，读码器开始取流并读码，还支持查看历史记录、统计信息等。", "breadcrumb": "读码器采图及读码 > 查看读码结果", "bodyText": "单击", "media": [{"path": "GUID-E482DCA3-E874-40BF-BCBB-D6CA1B3C2DAE-high.png", "type": "image"}, {"path": "GUID-6BF54C3A-B5BE-4296-A876-AE117E078879-high.png", "type": "image"}, {"path": "GUID-F56958DE-D9AA-496E-8A4F-E6A263FD3087-high.png", "type": "image"}, {"path": "GUID-8D11F141-160A-4758-AC42-9A3165321D2E-high.png", "type": "image"}, {"path": "GUID-5D4B77A6-6BDF-4BE5-A124-84F754C8F1F0-high.png", "type": "image"}, {"path": "GUID-9296132A-CB6C-45B8-94B9-53405FADDF97-high.png", "type": "image"}, {"path": "GUID-A520000A-4DB6-43DE-8319-28B5058AD791-high.png", "type": "image"}, {"path": "GUID-31842847-03B1-4C51-9DD5-6471B7606839-high.png", "type": "image"}]}, {"guid": "GUID-652294B9-1CBB-45C3-B5BB-14C6B84B20E0", "filename": "GUID-652294B9-1CBB-45C3-B5BB-14C6B84B20E0.html", "title": "配置客户端", "description": "通过IDMVS的外部命令控制模块，配置读码器通信指令参数。", "breadcrumb": "通信指令 > 通过TCP通信方式 > 配置客户端", "bodyText": "通过IDMVS的", "media": []}, {"guid": "GUID-672CD9AB-7B0C-47D5-B470-D905ED0B9F79", "filename": "GUID-672CD9AB-7B0C-47D5-B470-D905ED0B9F79.html", "title": "使用方法", "description": "使用Lua脚本需遵循一定的注意事项和使用流程。", "breadcrumb": "读码器高级配置 > Lua脚本 > 使用方法", "bodyText": "使用Lua脚本需遵循一定的注意事项和使用流程。", "media": [{"path": "GUID-691EE555-5056-4AC7-922D-581D2199F18D-high.png", "type": "image"}, {"path": "GUID-F1450A07-2A5E-45FF-AD25-B0BF843E1F17-high.png", "type": "image"}]}, {"guid": "GUID-68D7C850-0CDC-4E88-BBEF-98E6B877014C", "filename": "GUID-68D7C850-0CDC-4E88-BBEF-98E6B877014C.html", "title": "快捷键", "description": "通过快捷键可对IDMVS的常用功能进行快捷键设置。", "breadcrumb": "菜单栏相关介绍 > 设置 > 快捷键", "bodyText": "通过", "media": []}, {"guid": "GUID-6B682DFA-9D18-45F0-82EC-1524D5389880", "filename": "GUID-6B682DFA-9D18-45F0-82EC-1524D5389880.html", "title": "状态码", "description": "本节为您介绍使用通信指令时可能返回的状态码。", "breadcrumb": "通信指令 > 状态码", "bodyText": "本节为您介绍使用通信指令时可能返回的状态码。", "media": []}, {"guid": "GUID-6E0BF4EA-60AA-4F9A-9ED8-9438F85F3A60", "filename": "GUID-6E0BF4EA-60AA-4F9A-9ED8-9438F85F3A60.html", "title": "设置画面布局", "description": "客户端支持预览单个或多个画面，您可根据使用的读码器数量或其它读码需求灵活调整。当前客户端提供单画面、四画面、九画面3种布局模板，若不满足实际需求，也可以自定义画面布局。", "breadcrumb": "读码器高级配置 > 配置多读码器同步 > 设置画面布局", "bodyText": "客户端支持预览单个或多个画面，您可根据使用的读码器数量或其它读码需求灵活调整。当前客户端提供单画面、四画面、九画面3种布局模板，若不满足实际需求，也可以自定义画面布局。", "media": [{"path": "GUID-8CF25236-C75C-4D55-8774-CE1D99C0B87A-high.png", "type": "image"}, {"path": "GUID-FFB7A7DD-6D0F-4D18-ACAD-75AF7034D48A-high.png", "type": "image"}, {"path": "GUID-E0C874CA-5426-4AB0-91F2-7465D5A7762E-high.png", "type": "image"}, {"path": "GUID-4BB2F4ED-4AE8-42CD-B6A7-2FC6E09D420B-high.png", "type": "image"}, {"path": "GUID-9D35D857-845C-4C80-B5C4-9E8CD2DADCA4-high.mp4", "type": "video"}]}, {"guid": "GUID-7217336E-7A4A-4845-B887-E02317183D28", "filename": "GUID-7217336E-7A4A-4845-B887-E02317183D28.html", "title": "读码器安全日志", "description": "读码器安全日志功能用于记录和展示读码器在执行安全鉴权相关操作时的详细记录，确保操作可追溯。", "breadcrumb": "菜单栏相关介绍 > 日志 > 读码器安全日志", "bodyText": "读码器安全日志功能用于记录和展示读码器在执行安全鉴权相关操作时的详细记录，确保操作可追溯。", "media": [{"path": "GUID-A78E52BE-68D0-40BE-8556-2F2E15EC24C2-high.png", "type": "image"}]}, {"guid": "GUID-77031B4A-B8C8-4FD9-B301-55E8A2C26F81", "filename": "GUID-77031B4A-B8C8-4FD9-B301-55E8A2C26F81.html", "title": "配置通讯协议", "description": "当读码器需要与PLC等外部设备或控制系统进行通信时，IDMVS支持通过配置通讯协议自定义读码器的数据传输方式，确保数据能够按照指定的协议和格式发送到目标设备或系统。", "breadcrumb": "读码器常用配置 > 配置通讯协议", "bodyText": "当读码器需要与PLC等外部设备或控制系统进行通信时，IDMVS支持通过配置通讯协议自定义读码器的数据传输方式，确保数据能够按照指定的协议和格式发送到目标设备或系统。", "media": [{"path": "GUID-BED44DC1-4B11-477C-B592-AFA751E8FCB7-high.gif", "type": "image"}]}, {"guid": "GUID-78D88009-8345-4B78-962C-E0753034F648", "filename": "GUID-78D88009-8345-4B78-962C-E0753034F648.html", "title": "保存参数", "description": "读码器完成相关功能设置后，需将参数保存至用户参数组，否则读码器重启后设置会失效。", "breadcrumb": "读码器采图及读码 > 保存参数", "bodyText": "读码器完成相关功能设置后，需将参数保存至用户参数组，否则读码器重启后设置会失效。", "media": [{"path": "GUID-06AF613F-A938-485B-A1BA-C3EF279C0D53-high.png", "type": "image"}, {"path": "GUID-C30BB69A-7D16-4FF3-8D15-D44FEE3935FA-high.png", "type": "image"}, {"path": "GUID-C0B4F108-4BB1-422E-B906-C5FD104823BC-high.png", "type": "image"}, {"path": "GUID-D7CCF3A5-B148-428D-A39A-153B927023AE-high.png", "type": "image"}]}, {"guid": "GUID-7A7FE456-BDA1-43AE-9666-F294BCFB4A67", "filename": "GUID-7A7FE456-BDA1-43AE-9666-F294BCFB4A67.html", "title": "通过串口通信方式", "description": "读码器支持通过Serial协议进行通信，实际使用时需配置客户端及调试工具的通信参数，实现设备与PC端的数据互通。", "breadcrumb": "通信指令 > 通过串口通信方式", "bodyText": "读码器支持通过Serial协议进行通信，实际使用时需配置客户端及调试工具的通信参数，实现设备与PC端的数据互通。", "media": []}, {"guid": "GUID-7B2CB895-8384-44F3-A0F3-3788E6D7ADD5", "filename": "GUID-7B2CB895-8384-44F3-A0F3-3788E6D7ADD5.html", "title": "保存图像", "description": "读码器完成参数配置并预览图像达到想要的效果后，如您想保存图像，可通过菜单栏的存图来实现。", "breadcrumb": "读码器采图及读码 > 保存图像", "bodyText": "读码器完成参数配置并预览图像达到想要的效果后，如您想保存图像，可通过菜单栏的", "media": []}, {"guid": "GUID-7DE9AC36-7FF6-435C-BE42-603EE3E5A4FD", "filename": "GUID-7DE9AC36-7FF6-435C-BE42-603EE3E5A4FD.html", "title": "连接读码器", "description": "在设备列表发现读码器后，可连接设备以进行后续的调试和读码工作。", "breadcrumb": "读码器连接 > 连接读码器", "bodyText": "在设备列表发现读码器后，可连接设备以进行后续的调试和读码工作。", "media": [{"path": "GUID-28F97566-A830-4C49-BFE8-F126C11FE18C-high.png", "type": "image"}, {"path": "GUID-E935A20A-B16C-430A-B658-2C7285EB488C-high.png", "type": "image"}, {"path": "GUID-FCCF95AF-9A3F-4E27-9651-EBF139D0DAAA-high.png", "type": "image"}]}, {"guid": "GUID-7F5AB3AB-E9D8-4D3A-A41A-E51F55A06944", "filename": "GUID-7F5AB3AB-E9D8-4D3A-A41A-E51F55A06944.html", "title": "主界面", "description": "本章节介绍IDMVS的主界面。", "breadcrumb": "主界面", "bodyText": "本章节介绍IDMVS的主界面。", "media": [{"path": "GUID-270280F8-093F-4436-9674-1526A9B87F40-high.png", "type": "image"}, {"path": "GUID-32A8CFF5-DC9E-4985-AD08-1F3B3FCD901B-high.png", "type": "image"}, {"path": "GUID-AD560BD2-7030-4AAE-926B-3DFF5D6FF3B0-high.png", "type": "image"}, {"path": "GUID-FD5B8FC7-7E0B-462B-8B58-30ECB8910795-high.png", "type": "image"}, {"path": "GUID-06AF613F-A938-485B-A1BA-C3EF279C0D53-high.png", "type": "image"}, {"path": "GUID-FFB7A7DD-6D0F-4D18-ACAD-75AF7034D48A-high.png", "type": "image"}, {"path": "GUID-47B74078-8FC3-4DCA-91FD-DC1F47309EA9-high.gif", "type": "image"}, {"path": "GUID-0DCE3047-9EFC-4C98-8AA0-FDFEB740E736-high.png", "type": "image"}, {"path": "GUID-B6920F8A-4C81-4557-B651-2DE902CF616F-high.png", "type": "image"}, {"path": "GUID-E7B597F4-1C8A-4E97-97EE-96CEFF05B9C2-high.png", "type": "image"}, {"path": "GUID-CA806699-EEDB-4C77-B94D-324A62A7F42D-high.png", "type": "image"}, {"path": "GUID-FFB7A7DD-6D0F-4D18-ACAD-75AF7034D48A-high.png", "type": "image"}]}, {"guid": "GUID-8DCF2986-3BCF-4FB3-B3CF-820E9E29AED4", "filename": "GUID-8DCF2986-3BCF-4FB3-B3CF-820E9E29AED4.html", "title": "配置调试工具", "description": "通过串口调试工具的串口设置模块，配置读码器通信指令参数。", "breadcrumb": "通信指令 > 通过串口通信方式 > 配置调试工具", "bodyText": "通过串口调试工具的", "media": []}, {"guid": "GUID-8EEF68D1-C715-4C6E-BC62-BB32C7B56F46", "filename": "GUID-8EEF68D1-C715-4C6E-BC62-BB32C7B56F46.html", "title": "指令参考表", "description": "本节为您介绍包含设备控制、用户参数、触发与IO、码制使能以及智能调参相关通信指令，供您使用参考。", "breadcrumb": "通信指令 > 指令参考表", "bodyText": "本节为您介绍包含设备控制、用户参数、触发与IO、码制使能以及智能调参相关通信指令，供您使用参考。", "media": []}, {"guid": "GUID-906C0448-CB70-4554-B7DF-DE9EB2881E11", "filename": "GUID-906C0448-CB70-4554-B7DF-DE9EB2881E11.html", "title": "V4.2.0及之前", "description": "本章节介绍4.2.0及其之前版本的IDMVS功能更新动态。", "breadcrumb": "发版说明 > V4.2.0及之前", "bodyText": "本章节介绍4.2.0及其之前版本的IDMVS功能更新动态。", "media": []}, {"guid": "GUID-95AB18A5-4B46-4D79-8DE4-F398D813DEF6", "filename": "GUID-95AB18A5-4B46-4D79-8DE4-F398D813DEF6.html", "title": "过滤排序", "description": "IDMVS支持通过普通过滤、正则表达式过滤和脚本过滤三种模式筛选读码结果，并可设置排序规则以优化数据输出。", "breadcrumb": "读码器常用配置 > 处理输出数据 > 过滤排序", "bodyText": "IDMVS支持通过普通过滤、正则表达式过滤和脚本过滤三种模式筛选读码结果，并可设置排序规则以优化数据输出。", "media": []}, {"guid": "GUID-9642EFAF-6BCF-456B-AC37-815BA57357A4", "filename": "GUID-9642EFAF-6BCF-456B-AC37-815BA57357A4.html", "title": "输出", "description": "当读码器需要与通过I/O管脚相连的外部设备交互时，输出页面可对读码器的输出信号进行设置和管理，包括输出配置和ROI联动输出等设置。", "breadcrumb": "读码器常用配置 > 配置输入/输出 > 输出", "bodyText": "当读码器需要与通过I/O管脚相连的外部设备交互时，输出页面可对读码器的输出信号进行设置和管理，包括输出配置和ROI联动输出等设置。", "media": [{"path": "GUID-294F7CFA-B3FD-4862-AD09-CA349CEF081B-high.png", "type": "image"}]}, {"guid": "GUID-984E9162-7708-467B-84C0-04872410B2CA", "filename": "GUID-984E9162-7708-467B-84C0-04872410B2CA.html", "title": "预览有画面，但条码未识别", "description": "当图像中的条码无法识别时，可从支持的码制、图像质量方面尝试解决。", "breadcrumb": "问题排查 > 条码识别与输出问题排查 > 预览有画面，但条码未识别", "bodyText": "当图像中的条码无法识别时，可从支持的码制、图像质量方面尝试解决。", "media": []}, {"guid": "GUID-9B478253-35E9-433E-8628-C760D657B450", "filename": "GUID-9B478253-35E9-433E-8628-C760D657B450.html", "title": "预览时采集不到图像", "description": "IDMVS采集不到图像，可能和环境配置、参数设置等有关。", "breadcrumb": "问题排查 > 图像预览问题排查 > 预览时采集不到图像", "bodyText": "IDMVS采集不到图像，可能和环境配置、参数设置等有关。", "media": []}, {"guid": "GUID-9B65ABDB-62FE-4C22-8E46-750F094B35FD", "filename": "GUID-9B65ABDB-62FE-4C22-8E46-750F094B35FD.html", "title": "客户端存图", "description": "客户端存图是通过IDMVS层面将读码器图像存储到本机PC上。通过菜单栏存图的客户端存图可设置存图规则。", "breadcrumb": "读码器采图及读码 > 保存图像 > 客户端存图", "bodyText": "", "media": [{"path": "GUID-81C2118E-146C-4BE3-B8A3-7F8693566CBE-high.png", "type": "image"}, {"path": "GUID-EC2BDDEB-168B-49D7-837E-18F1D1A1F30C-high.png", "type": "image"}, {"path": "GUID-267E8ABF-68D2-4D43-903E-AD5CA36F0BDF-high.png", "type": "image"}]}, {"guid": "GUID-9C11A9D7-7590-4A04-BE25-88F5CF8FDA4C", "filename": "GUID-9C11A9D7-7590-4A04-BE25-88F5CF8FDA4C.html", "title": "选型工具", "description": "选型工具旨在帮助您根据实际读码需求，快速准确地筛选出最适合的读码器型号，并提供关键的读码性能参数和读码器安装示意图。", "breadcrumb": "菜单栏相关介绍 > 工具 > 选型工具", "bodyText": "选型工具旨在帮助您根据实际读码需求，快速准确地筛选出最适合的读码器型号，并提供关键的读码性能参数和读码器安装示意图。", "media": [{"path": "GUID-3678CCE9-6875-46B3-B67A-50C5E5F2BFB8-high.png", "type": "image"}]}, {"guid": "GUID-9E538898-40D1-480E-8A36-40BEC4586E63", "filename": "GUID-9E538898-40D1-480E-8A36-40BEC4586E63.html", "title": "菜单栏相关介绍", "description": "您通过菜单栏可进行IDMVS基础设置、IDMVS或读码器存图、使用工具、查看日志、查看IDMVS基本信息等操作。", "breadcrumb": "菜单栏相关介绍", "bodyText": "您通过菜单栏可进行IDMVS基础设置、IDMVS或读码器存图、使用工具、查看日志、查看IDMVS基本信息等操作。", "media": []}, {"guid": "GUID-9ED8A60A-4358-4489-A0B0-005FA5B048B5", "filename": "GUID-9ED8A60A-4358-4489-A0B0-005FA5B048B5.html", "title": "调试图像及码制", "description": "当读码配置需要精细调整时，可通过成像配置、码制选择模块调整图像、光源、码制类型等参数，确保条码清晰可辨识；当读码环境动态变换时，可通过参数轮询预设多组参数组合，自动切换以应对变换的场景。", "breadcrumb": "读码器常用配置 > 调试图像及码制", "bodyText": "当读码配置需要精细调整时，可通过成像配置、码制选择模块调整图像、光源、码制类型等参数，确保条码清晰可辨识；当读码环境动态变换时，可通过参数轮询预设多组参数组合，自动切换以应对变换的场景。", "media": []}, {"guid": "GUID-A17C75D2-8073-4701-B3BD-2F38FE1C2AD8", "filename": "GUID-A17C75D2-8073-4701-B3BD-2F38FE1C2AD8.html", "title": "错误码", "description": "错误码为使用IDMVS过程中，执行操作异常后返回的信息代码。当返回错误码时，您可以查阅本章节错误码对照表获取说明及解决方法。", "breadcrumb": "错误码", "bodyText": "错误码为使用IDMVS过程中，执行操作异常后返回的信息代码。当返回错误码时，您可以查阅本章节错误码对照表获取说明及解决方法。", "media": []}, {"guid": "GUID-A2447B90-DEA6-4A6C-9EDA-5FEE07AD8664", "filename": "GUID-A2447B90-DEA6-4A6C-9EDA-5FEE07AD8664.html", "title": "设置", "description": "通过菜单栏的设置可对IDMVS及读码器进行全局相关设置。", "breadcrumb": "菜单栏相关介绍 > 设置", "bodyText": "通过菜单栏的", "media": []}, {"guid": "GUID-A337EA85-1E2F-4127-AEC0-D801E3852EE9", "filename": "GUID-A337EA85-1E2F-4127-AEC0-D801E3852EE9.html", "title": "可识别条码，但上位机接收码数据异常", "description": "上位机无法正常接收码数据时，可能和环境配置、参数设置、外部接线有关。", "breadcrumb": "问题排查 > 条码识别与输出问题排查 > 可识别条码，但上位机接收码数据异常", "bodyText": "上位机无法正常接收码数据时，可能和环境配置、参数设置、外部接线有关。", "media": []}, {"guid": "GUID-A4785986-11E1-4B06-A840-98B617E2B20C", "filename": "GUID-A4785986-11E1-4B06-A840-98B617E2B20C.html", "title": "通讯相关", "description": "读码器作为TCP 服务器可以连接几个TCP 客户端？ 8个。 读码器跟PLC进行TCP通讯，能否把读出来的信息转换成16进制输出给PLC？ 读码器输出为ASCII码，无法直接转换，需要PLC进行转换实现。 客户端里读到的数据为14，为什么传输到PLC设备显示的是12000？ 因为数据格式不匹配，IDMVS数据默认为ASCII码格式，建议使用PLC转换至ASCII格式。 ...", "breadcrumb": "常见问题 > 通讯相关", "bodyText": "", "media": []}, {"guid": "GUID-A49A7A2C-9786-463B-B026-31FE012E4FA7", "filename": "GUID-A49A7A2C-9786-463B-B026-31FE012E4FA7.html", "title": "参数轮询", "description": "针对动态复杂读码场景（如条码位置变化、光线波动等），参数轮询功能通过预设多组成像参数组合，读码器取流时自动切换参数适配环境变化，确保动态读码场景下条码识别的稳定性与准确性。本章节以开启多组参数轮询为例，为您介绍参数轮询功能。", "breadcrumb": "读码器常用配置 > 调试图像及码制 > 参数轮询", "bodyText": "针对动态复杂读码场景（如条码位置变化、光线波动等），参数轮询功能通过预设多组成像参数组合，读码器取流时自动切换参数适配环境变化，确保动态读码场景下条码识别的稳定性与准确性。本章节以开启多组参数轮询为例，为您介绍参数轮询功能。", "media": [{"path": "GUID-EC2E1E54-B941-4E59-8BA1-A17A5B552915-high.png", "type": "image"}, {"path": "GUID-CC0E42AE-B552-476F-B13C-6FEF66C3F19C-high.png", "type": "image"}, {"path": "GUID-4DF02E3E-0664-46AC-B730-0762E81FA6E6-high.png", "type": "image"}]}, {"guid": "GUID-AC2BA583-76F4-4089-A297-F9189F761FFE", "filename": "GUID-AC2BA583-76F4-4089-A297-F9189F761FFE.html", "title": "快速配置", "description": "客户端的读取设置模块支持快速完成条码读取调试，帮助您读取到清晰完整的条码。", "breadcrumb": "读码器采图及读码 > 快速配置", "bodyText": "客户端的", "media": [{"path": "GUID-CD3354BA-0CAD-418A-BFF9-29231A9C0313-high.png", "type": "image"}, {"path": "GUID-DF6DDA9B-A20D-404A-BC7E-EB62167CA790-high.png", "type": "image"}, {"path": "GUID-4BB1B6F7-E568-4455-8CA5-AD4117B99B18-high.png", "type": "image"}, {"path": "GUID-13F7AEC4-C95E-460D-89C3-168FC5C6CB5F-high.png", "type": "image"}]}, {"guid": "GUID-AC630637-4E20-4722-806E-0755E6142EA4", "filename": "GUID-AC630637-4E20-4722-806E-0755E6142EA4.html", "title": "工具", "description": "通过菜单栏的工具可对使用读码器提供相关辅助。", "breadcrumb": "菜单栏相关介绍 > 工具", "bodyText": "通过菜单栏的", "media": []}, {"guid": "GUID-AF718320-5C42-497B-B069-D8C3EB184A86", "filename": "GUID-AF718320-5C42-497B-B069-D8C3EB184A86.html", "title": "概述", "description": "Lua脚本是一种嵌入式脚本语言，具有简洁的语法、高效的执行速度和易于嵌入的特点。IDMVS支持通过Lua脚本自定义配置读码器格式化输出、数据处理、FTP图像名、文件名及文件内容编辑等，实现功能的扩展。", "breadcrumb": "读码器高级配置 > Lua脚本 > 概述", "bodyText": "Lua脚本是一种嵌入式脚本语言，具有简洁的语法、高效的执行速度和易于嵌入的特点。IDMVS支持通过Lua脚本自定义配置读码器格式化输出、数据处理、FTP图像名、文件名及文件内容编辑等，实现功能的扩展。", "media": [{"path": "GUID-A3A0A527-2E8F-4987-976C-E334F7C46C60-high.png", "type": "image"}, {"path": "GUID-877145B7-7BF1-4995-8E02-7A6DF2138C32-high.png", "type": "image"}, {"path": "GUID-DD898D8A-01A8-446D-A943-EFE8837BFDE7-high.png", "type": "image"}, {"path": "GUID-CA8B2CD6-6113-4193-BF3B-02480730F1C5-high.png", "type": "image"}]}, {"guid": "GUID-B0666C62-ABE2-4BE1-B728-703D1165E93A", "filename": "GUID-B0666C62-ABE2-4BE1-B728-703D1165E93A.html", "title": "焦点输出", "description": "焦点输出支持在可编辑文本框（例如记事本、Word文档、对话框等）中自动输入读码器的读码结果。", "breadcrumb": "菜单栏相关介绍 > 设置 > 焦点输出", "bodyText": "", "media": []}, {"guid": "GUID-B1EF9413-F939-44CB-9EFC-8043FE409E20", "filename": "GUID-B1EF9413-F939-44CB-9EFC-8043FE409E20.html", "title": "客户端无法发现读码器", "description": "IDMVS无法发现读码器，可能和读码器属性、IP配置、通用相关设置有关。", "breadcrumb": "问题排查 > 连接问题排查 > 客户端无法发现读码器", "bodyText": "IDMVS无法发现读码器，可能和读码器属性、IP配置、通用相关设置有关。", "media": [{"path": "GUID-29783162-478A-4E1E-835F-8B308C5A02BC-high.png", "type": "image"}]}, {"guid": "GUID-B212CF88-F6C3-4BD9-B11A-37D3A8281D80", "filename": "GUID-B212CF88-F6C3-4BD9-B11A-37D3A8281D80.html", "title": "配置调试工具", "description": "通过TCP调试工具的网络设置模块，配置读码器通信指令参数。", "breadcrumb": "通信指令 > 通过TCP通信方式 > 配置调试工具", "bodyText": "通过TCP调试工具的", "media": []}, {"guid": "GUID-B58203FB-9ABB-42C6-A4A2-A9858372C789", "filename": "GUID-B58203FB-9ABB-42C6-A4A2-A9858372C789.html", "title": "一维码打码评级", "description": "打码评级功能支持对采集到的一维码图像进行质量评估和等级评分。一维码打码评级遵循 ISO/IEC 15416 标准， 分别从 6 个方面对条码进行判断， 选取所有参数中最低的等级作为条码的等级判断结果。", "breadcrumb": "读码器高级配置 > 评估码质量 > 一维码打码评级", "bodyText": "打码评级功能支持对采集到的一维码图像进行质量评估和等级评分。一维码打码评级遵循 ISO/IEC 15416 标准， 分别从 6 个方面对条码进行判断，\n        选取所有参数中最低的等级作为条码的等级判断结果。", "media": [{"path": "GUID-A4132222-EEE9-4E21-A4D3-23E3E2F7F89B-high.png", "type": "image"}, {"path": "GUID-B715D26A-4F89-424A-872A-D9AF94557669-high.png", "type": "image"}]}, {"guid": "GUID-B9202C17-0068-4879-9520-132F7C4F6BCB", "filename": "GUID-B9202C17-0068-4879-9520-132F7C4F6BCB.html", "title": "配置多读码器同步", "description": "当多台读码器同时进行采集图像解析条码时，可通过组播或主从组网功能使多读码器进行协同工作，实现多读码器同步触发和高效数据传输。同时支持在IDMVS主界面配置多画面布局同时预览多读码器画面。", "breadcrumb": "读码器高级配置 > 配置多读码器同步", "bodyText": "当多台读码器同时进行采集图像解析条码时，可通过组播或主从组网功能使多读码器进行协同工作，实现多读码器同步触发和高效数据传输。同时支持在IDMVS主界面配置多画面布局同时预览多读码器画面。", "media": []}, {"guid": "GUID-BC1B3F52-C3F7-4543-B6FC-86616640A46E", "filename": "GUID-BC1B3F52-C3F7-4543-B6FC-86616640A46E.html", "title": "条码裁剪", "description": "条码裁剪功能支持对读取的条码数据进行裁剪和处理，满足对条码数据进行特殊处理的需求，例如提取条码中特定数据、指定条码内容等。", "breadcrumb": "读码器常用配置 > 处理输出数据 > 条码裁剪", "bodyText": "条码裁剪功能支持对读取的条码数据进行裁剪和处理，满足对条码数据进行特殊处理的需求，例如提取条码中特定数据、指定条码内容等。", "media": [{"path": "GUID-2EAAAA60-BFBE-4CF3-9456-FDDA08BC6E0D-high.gif", "type": "image"}]}, {"guid": "GUID-BCB412AE-2905-412C-8DAD-1936782B0F93", "filename": "GUID-BCB412AE-2905-412C-8DAD-1936782B0F93.html", "title": "准备工作", "description": "为了保证您能够顺利连接读码器并正常使用客户端功能，请先确保运行环境符合要求，之后需要完成读码器的硬件接线并进行必要的环境配置。", "breadcrumb": "读码器连接 > 准备工作", "bodyText": "为了保证您能够顺利连接读码器并正常使用客户端功能，请先确保运行环境符合要求，之后需要完成读码器的硬件接线并进行必要的环境配置。", "media": [{"path": "GUID-675EB10B-A06E-425D-A46D-14C90121F25A-high.png", "type": "image"}, {"path": "GUID-117369CC-6AE2-4D42-BBBE-B49E8FF0EE9B-high.png", "type": "image"}, {"path": "GUID-31BF52AC-2757-4BED-8E46-2A6241ACC9D9-high.png", "type": "image"}, {"path": "GUID-438509E5-2FE1-4E3C-8645-9586ACA3ED83-high.png", "type": "image"}, {"path": "GUID-7320F4D3-1043-46CC-9929-E4764FDB0CE1-high.png", "type": "image"}]}, {"guid": "GUID-BD245300-F61D-47C6-B059-084865F887A5", "filename": "GUID-BD245300-F61D-47C6-B059-084865F887A5.html", "title": "配置客户端", "description": "通过IDMVS的外部命令控制模块，配置读码器通信指令参数。", "breadcrumb": "通信指令 > 通过UDP通信方式 > 配置客户端", "bodyText": "通过IDMVS的", "media": []}, {"guid": "GUID-BD2FAA4B-DCCE-449B-842F-EFE480C1CC6F", "filename": "GUID-BD2FAA4B-DCCE-449B-842F-EFE480C1CC6F.html", "title": "发版说明", "description": "本章节介绍Windows系统的IDMVS各版本的功能更新动态以及读码器适配情况。", "breadcrumb": "发版说明", "bodyText": "本章节介绍Windows系统的IDMVS各版本的功能更新动态以及读码器适配情况。", "media": []}, {"guid": "GUID-C0C62E9E-0A13-4D68-9EEF-58ADDD8596BA", "filename": "GUID-C0C62E9E-0A13-4D68-9EEF-58ADDD8596BA.html", "title": "配置客户端", "description": "通过IDMVS的外部命令控制模块，配置读码器通信指令参数。", "breadcrumb": "通信指令 > 通过串口通信方式 > 配置客户端", "bodyText": "通过IDMVS的", "media": []}, {"guid": "GUID-C3AE063C-E14B-4882-A14C-1A6B2F872C1E", "filename": "GUID-C3AE063C-E14B-4882-A14C-1A6B2F872C1E.html", "title": "格式化配置", "description": "格式化配置功能支持通过通讯协议输出的数据按照特定的结构、样式或规则进行组织，包括添加或删除输出内容或字符、设置输出内容开始和结束部分等。", "breadcrumb": "读码器常用配置 > 处理输出数据 > 格式化配置", "bodyText": "格式化配置功能支持通过通讯协议输出的数据按照特定的结构、样式或规则进行组织，包括添加或删除输出内容或字符、设置输出内容开始和结束部分等。", "media": []}, {"guid": "GUID-C3B862E1-BB0F-41D2-8074-E7DA2389E556", "filename": "GUID-C3B862E1-BB0F-41D2-8074-E7DA2389E556.html", "title": "本地日志", "description": "本地日志可查看并导出客户端和SDK的日志信息。", "breadcrumb": "菜单栏相关介绍 > 日志 > 本地日志", "bodyText": "", "media": []}, {"guid": "GUID-C5494A18-48A4-4821-9A20-4388A5E936B5", "filename": "GUID-C5494A18-48A4-4821-9A20-4388A5E936B5.html", "title": "停止触发配置", "description": "IDMVS支持通过多种方式控制读码器停止图像采集和读码。", "breadcrumb": "读码器常用配置 > 配置输入/输出 > 输入 > 停止触发配置", "bodyText": "IDMVS支持通过多种方式控制读码器停止图像采集和读码。", "media": [{"path": "GUID-ECAC2D8F-07A4-480D-9E53-680CDED921C7-high.png", "type": "image"}, {"path": "GUID-ECAC2D8F-07A4-480D-9E53-680CDED921C7-high.png", "type": "image"}, {"path": "GUID-ECAC2D8F-07A4-480D-9E53-680CDED921C7-high.png", "type": "image"}, {"path": "GUID-ECAC2D8F-07A4-480D-9E53-680CDED921C7-high.png", "type": "image"}]}, {"guid": "GUID-C9B6C6BA-02CC-4D2D-8A13-48773AF3C0AF", "filename": "GUID-C9B6C6BA-02CC-4D2D-8A13-48773AF3C0AF.html", "title": "虚拟读码器", "description": "通过虚拟读码器可将实际读码器录制为虚拟读码器，还支持添加虚拟读码器。", "breadcrumb": "菜单栏相关介绍 > 工具 > 虚拟读码器", "bodyText": "通过", "media": [{"path": "GUID-BF63C0BE-CAF9-4A81-A5CD-0CE3007D7D19-high.png", "type": "image"}]}, {"guid": "GUID-CD0A67A0-A5F1-42E4-BCC6-C4DA9B21C28D", "filename": "GUID-CD0A67A0-A5F1-42E4-BCC6-C4DA9B21C28D.html", "title": "码制选择", "description": "IDMVS码制选择模块支持配置读码器可读取的条码类型、条码个数、读码算法和ROI，适配不同读码场景，方便按需优化读码效果。", "breadcrumb": "读码器常用配置 > 调试图像及码制 > 码制选择", "bodyText": "IDMVS码制选择模块支持配置读码器可读取的条码类型、条码个数、读码算法和ROI，适配不同读码场景，方便按需优化读码效果。", "media": [{"path": "GUID-05E78926-3A55-42B0-97DA-CE14F8507D8B-high.png", "type": "image"}]}, {"guid": "GUID-CF1764A7-9C4D-4225-80EE-BF5BE90F1544", "filename": "GUID-CF1764A7-9C4D-4225-80EE-BF5BE90F1544.html", "title": "固件升级工具", "description": "固件升级工具可对读码器进行固件升级。该工具支持同时对多个读码器进行固件升级。固件升级主要用于对读码器内的程序进行升级，可解决部分由读码器固件引发的问题，或实现部分由读码器固件控制的功能。", "breadcrumb": "菜单栏相关介绍 > 工具 > 固件升级工具", "bodyText": "", "media": [{"path": "GUID-B25640A6-5C0C-4E6E-90B2-E27808CB4952-high.png", "type": "image"}, {"path": "GUID-81C2118E-146C-4BE3-B8A3-7F8693566CBE-high.png", "type": "image"}, {"path": "GUID-D1F82D0A-2319-46C2-BB99-D7EFE45F6FE1-high.png", "type": "image"}]}, {"guid": "GUID-D0FF465C-9D02-4E72-91DF-8FDA54B37BD9", "filename": "GUID-D0FF465C-9D02-4E72-91DF-8FDA54B37BD9.html", "title": "FTP存储", "description": "FTP存储功能将本机PC作为FTP的服务端，读码器作为FTP的客户端，通过FTP服务将读码器的图像或读码结果传输到本机PC上。通过菜单栏存图的FTP存储可设置本机PC作为FTP服务端的相关参数。", "breadcrumb": "读码器采图及读码 > 保存图像 > FTP存储", "bodyText": "", "media": [{"path": "GUID-3ED9A2A9-8046-4B33-9172-FA6B9EE49EE7-high.png", "type": "image"}, {"path": "GUID-81C2118E-146C-4BE3-B8A3-7F8693566CBE-high.png", "type": "image"}]}, {"guid": "GUID-D2FB32CF-A8C4-41BB-8545-FA6691286924", "filename": "GUID-D2FB32CF-A8C4-41BB-8545-FA6691286924.html", "title": "连接前配置", "description": "若在设备列表已发现读码器且设备未被占用，可根据需要激活读码器、修改读码器IP或升级其固件版本。", "breadcrumb": "读码器连接 > 连接前配置", "bodyText": "若在设备列表已发现读码器且设备未被占用，可根据需要激活读码器、修改读码器IP或升级其固件版本。", "media": [{"path": "GUID-A6873F5C-A3EB-4F3C-8DF0-6F070D1D8CF1-high.png", "type": "image"}, {"path": "GUID-A6873F5C-A3EB-4F3C-8DF0-6F070D1D8CF1-high.png", "type": "image"}, {"path": "GUID-7B392576-E0B3-4BF6-A64B-BC726F711744-high.png", "type": "image"}, {"path": "GUID-A6873F5C-A3EB-4F3C-8DF0-6F070D1D8CF1-high.png", "type": "image"}, {"path": "GUID-6A49439F-5CFF-467D-A915-0F9282DE6891-high.png", "type": "image"}, {"path": "GUID-87BD3FCF-264A-4EF7-8C81-005E299242DF-high.png", "type": "image"}, {"path": "GUID-5586EA65-D767-417F-8C5E-1E3D9DCC50B3-high.png", "type": "image"}, {"path": "GUID-1809005F-61F0-4000-ACB8-45A647E4A81E-high.png", "type": "image"}, {"path": "GUID-C7A8F5CD-B5E1-4252-B3D3-A0CC2439F168-high.png", "type": "image"}]}, {"guid": "GUID-D4538491-958A-4B72-8977-C3744887D6D7", "filename": "GUID-D4538491-958A-4B72-8977-C3744887D6D7.html", "title": "读码器连接", "description": "连接读码器是使用IDMVS进行读码的必要条件，也是打开客户端后的初始步骤。本章节主要介绍环境准备工作，并指导您一步步发现并连接读码器。", "breadcrumb": "读码器连接", "bodyText": "连接读码器是使用IDMVS进行读码的必要条件，也是打开客户端后的初始步骤。本章节主要介绍环境准备工作，并指导您一步步发现并连接读码器。", "media": [{"path": "GUID-447D8136-A1DB-4543-948C-9854E2E8442E-high.png", "type": "image"}, {"path": "GUID-6C5ADBED-97B1-4DAD-919A-70E0B484C399-high.png", "type": "image"}]}, {"guid": "GUID-D7E2D52E-3606-4973-8A6B-0D5263A25343", "filename": "GUID-D7E2D52E-3606-4973-8A6B-0D5263A25343.html", "title": "历史记录导出", "description": "历史记录导出可设置读码器导出历史记录的方式、文件格式、文件个数以及存储路径等。", "breadcrumb": "菜单栏相关介绍 > 设置 > 历史记录导出", "bodyText": "", "media": [{"path": "GUID-6BF1AE7B-5BFC-4613-AFC6-E13FF0E82CE3-high.png", "type": "image"}, {"path": "GUID-6BF1AE7B-5BFC-4613-AFC6-E13FF0E82CE3-high.png", "type": "image"}, {"path": "GUID-6BF1AE7B-5BFC-4613-AFC6-E13FF0E82CE3-high.png", "type": "image"}, {"path": "GUID-6BF1AE7B-5BFC-4613-AFC6-E13FF0E82CE3-high.png", "type": "image"}, {"path": "GUID-6BF1AE7B-5BFC-4613-AFC6-E13FF0E82CE3-high.png", "type": "image"}]}, {"guid": "GUID-D8488278-18E0-41D0-91B9-35636662C53F", "filename": "GUID-D8488278-18E0-41D0-91B9-35636662C53F.html", "title": "读码器常用配置", "description": "如您需要根据实际场景调整成像效果、适配不同码制类型、应对动态环境变化、建立设备间通信、处理读码结果或配置输入输出信号时，可参考本章节进行读码器配置。", "breadcrumb": "读码器常用配置", "bodyText": "如您需要根据实际场景调整成像效果、适配不同码制类型、应对动态环境变化、建立设备间通信、处理读码结果或配置输入输出信号时，可参考本章节进行读码器配置。", "media": []}, {"guid": "GUID-DCBF1172-BCF4-41B4-A757-EA10E56027C2", "filename": "GUID-DCBF1172-BCF4-41B4-A757-EA10E56027C2.html", "title": "应用示例", "description": "本文通过一个Lua脚本处理读码结果的应用示例，为您介绍如何通过Lua脚本对读取的条码内容进行裁剪和过滤，最终获取有用的部分内容。", "breadcrumb": "读码器高级配置 > Lua脚本 > 应用示例", "bodyText": "本文通过一个Lua脚本处理读码结果的应用示例，为您介绍如何通过Lua脚本对读取的条码内容进行裁剪和过滤，最终获取有用的部分内容。", "media": [{"path": "GUID-880D73F7-A567-4A5F-A730-81ACFEBCCA91-high.png", "type": "image"}, {"path": "GUID-FC61AAAB-CE8B-4147-981B-43F9D638EBF3-high.png", "type": "image"}]}, {"guid": "GUID-DD3346C3-533A-42C2-B1FB-69197BB0884D", "filename": "GUID-DD3346C3-533A-42C2-B1FB-69197BB0884D.html", "title": "读码器分组", "description": "客户端支持对设备列表处发现的设备进行分组。复杂的读码场景中可能需要多台读码器协同工作，此时您可以根据使用场景或工作任务将读码器分组，便于整体的协调和控制。", "breadcrumb": "读码器连接 > 读码器分组", "bodyText": "客户端支持对设备列表处发现的设备进行分组。复杂的读码场景中可能需要多台读码器协同工作，此时您可以根据使用场景或工作任务将读码器分组，便于整体的协调和控制。", "media": [{"path": "GUID-A2D3FD2B-60CC-43C5-B8D3-CDA6E5024FE2-high.gif", "type": "image"}]}, {"guid": "GUID-E0277959-64F0-47F3-A898-6D199B516231", "filename": "GUID-E0277959-64F0-47F3-A898-6D199B516231.html", "title": "通讯控制", "description": "您可通过通讯控制功能配置自定义命令，利用串口、TCP或UDP协议从外部发送自定义命令至读码器，实现对读码器的灵活控制。", "breadcrumb": "读码器高级配置 > 通讯控制", "bodyText": "您可通过通讯控制功能配置自定义命令，利用串口、TCP或UDP协议从外部发送自定义命令至读码器，实现对读码器的灵活控制。", "media": [{"path": "GUID-C8A0738B-D206-4C30-9738-C41DCAD91A35-high.png", "type": "image"}, {"path": "GUID-EE99C4C5-FDE0-46F8-B336-0D1770DF28B8-high.png", "type": "image"}, {"path": "GUID-B6494558-0621-4454-8852-92788683D178-high.png", "type": "image"}, {"path": "GUID-B0B72433-CC2A-49EE-9678-73C9C3AC972A-high.png", "type": "image"}]}, {"guid": "GUID-E2021565-653D-48AF-AB7E-9721D4A5B31D", "filename": "GUID-E2021565-653D-48AF-AB7E-9721D4A5B31D.html", "title": "IP配置工具", "description": "IP配置工具可对读码器的IP地址进行配置。该工具支持同时配置多个读码器的IP地址。IP配置主要用于对读码器的IP分配方式及IP地址进行设置，使读码器和安装IDMVS的PC处于同一网段，从而通过IDMVS连接读码器进行采图及读码。故完成读码器的IP配置是IDMVS连接读码器的前提条件。", "breadcrumb": "菜单栏相关介绍 > 工具 > IP配置工具", "bodyText": "", "media": [{"path": "GUID-B25640A6-5C0C-4E6E-90B2-E27808CB4952-high.png", "type": "image"}, {"path": "GUID-567105E4-8949-4504-847F-D49D76718200-high.png", "type": "image"}, {"path": "GUID-266B2B58-C6ED-49A3-B42B-98B2B176D353-high.png", "type": "image"}]}, {"guid": "GUID-E2F09DEC-65C4-43BB-B0ED-B656BDAE92CE", "filename": "GUID-E2F09DEC-65C4-43BB-B0ED-B656BDAE92CE.html", "title": "组播", "description": "多读码器组播组网由一个主读码器和多个从读码器组成，主读码器用于同步触发号，所有读码器各自传输读码数据至读码平台。", "breadcrumb": "读码器高级配置 > 配置多读码器同步 > 组播", "bodyText": "多读码器组播组网由一个主读码器和多个从读码器组成，主读码器用于同步触发号，所有读码器各自传输读码数据至读码平台。", "media": [{"path": "GUID-D50788E4-D111-46E4-A967-FB657BD7E263-high.png", "type": "image"}]}, {"guid": "GUID-E651848B-CCFF-43E5-9A3F-6784124967A8", "filename": "GUID-E651848B-CCFF-43E5-9A3F-6784124967A8.html", "title": "配置输入/输出", "description": "通过IDMVS的输入输出功能，设置读码器的触发信号和输出信号，实现与其他设备（例如PLC、光源等）间的交互。", "breadcrumb": "读码器常用配置 > 配置输入/输出", "bodyText": "通过IDMVS的输入输出功能，设置读码器的触发信号和输出信号，实现与其他设备（例如PLC、光源等）间的交互。", "media": []}, {"guid": "GUID-E7F4FAC0-6238-49E2-9828-AC66BB1F38AE", "filename": "GUID-E7F4FAC0-6238-49E2-9828-AC66BB1F38AE.html", "title": "文件存取工具", "description": "文件存取工具可批量导入读码器参数、ROI等属性。文件存取的本质为通过读码器自身导入或导出用户参数、算法ROI参数等。", "breadcrumb": "菜单栏相关介绍 > 工具 > 文件存取工具", "bodyText": "", "media": [{"path": "GUID-B25640A6-5C0C-4E6E-90B2-E27808CB4952-high.png", "type": "image"}, {"path": "GUID-81C2118E-146C-4BE3-B8A3-7F8693566CBE-high.png", "type": "image"}, {"path": "GUID-D90EF592-BA88-4EF7-8270-33D2662E6604-high.png", "type": "image"}]}, {"guid": "GUID-E801A036-3BEC-4781-B01F-BA2AB5F08A8D", "filename": "GUID-E801A036-3BEC-4781-B01F-BA2AB5F08A8D.html", "title": "SDK日志", "description": "SDK日志主要用于查看SDK运行时产生的日志信息。", "breadcrumb": "菜单栏相关介绍 > 日志 > SDK日志", "bodyText": "", "media": [{"path": "GUID-B25640A6-5C0C-4E6E-90B2-E27808CB4952-high.png", "type": "image"}, {"path": "GUID-5C2FBA1F-3A0D-43AF-A864-332A35FB4CDC-high.png", "type": "image"}, {"path": "GUID-EC2BDDEB-168B-49D7-837E-18F1D1A1F30C-high.png", "type": "image"}, {"path": "GUID-607A1A65-1D29-4DDD-AD88-4D37DA59DAB3-high.png", "type": "image"}]}, {"guid": "GUID-E8E0A30A-D073-42FC-9DF7-53E49B2281C1", "filename": "GUID-E8E0A30A-D073-42FC-9DF7-53E49B2281C1.html", "title": "预览时画面全黑", "description": "IDMVS预览图像，画面全黑时，可尝试调整曝光或镜头光圈进行改善。", "breadcrumb": "问题排查 > 图像预览问题排查 > 预览时画面全黑", "bodyText": "IDMVS预览图像，画面全黑时，可尝试调整曝光或镜头光圈进行改善。", "media": []}, {"guid": "GUID-ED033F61-8FA1-4DB9-8418-8263DFEEA37F", "filename": "GUID-ED033F61-8FA1-4DB9-8418-8263DFEEA37F.html", "title": "权限", "description": "通过权限可设置管理员和操作员，同时还可对IDMVS进行锁定。", "breadcrumb": "菜单栏相关介绍 > 设置 > 权限", "bodyText": "通过", "media": [{"path": "GUID-C4BDC1AF-A678-4A7D-A407-C5995D10FDDC-high.png", "type": "image"}, {"path": "GUID-6A0F5B6D-1D7C-4944-B4E1-0336D5024113-high.png", "type": "image"}, {"path": "GUID-0DCE3047-9EFC-4C98-8AA0-FDFEB740E736-high.png", "type": "image"}, {"path": "GUID-06598EE5-8223-4078-8A9A-39E1083D7908-high.png", "type": "image"}, {"path": "GUID-0DCE3047-9EFC-4C98-8AA0-FDFEB740E736-high.png", "type": "image"}, {"path": "GUID-FD98F8EA-BCA8-4558-BBFD-2F1AD2F9F8EA-high.png", "type": "image"}]}, {"guid": "GUID-ED0C6770-2ECF-4430-B692-9078556D1D2D", "filename": "GUID-ED0C6770-2ECF-4430-B692-9078556D1D2D.html", "title": "通信指令", "description": "通信指令是通过TCP、UDP及Serial其中任意一种通信方式给读码器发送的指令。读码器接收到指令后，可根据指令内容执行设备控制、用户参数、触发与IO、码制使能以及智能调参等功能设置。", "breadcrumb": "通信指令", "bodyText": "通信指令是通过TCP、UDP及Serial其中任意一种通信方式给读码器发送的指令。读码器接收到指令后，可根据指令内容执行设备控制、用户参数、触发与IO、码制使能以及智能调参等功能设置。", "media": [{"path": "GUID-56BA6874-C545-402F-9614-2EEAB60FBB8F-high.png", "type": "image"}, {"path": "GUID-133F1D89-85EE-43D6-82F4-FB282A9444A8-high.png", "type": "image"}, {"path": "GUID-6C7642AE-F4E8-42FC-BA2E-34F18B0F7554-high.png", "type": "image"}]}, {"guid": "GUID-EE9D5317-D3A9-4595-8068-C96B2ABBD11B", "filename": "GUID-EE9D5317-D3A9-4595-8068-C96B2ABBD11B.html", "title": "问题排查", "description": "若使用过程中，遇到连接、图像预览、条码识别与输出相关问题，您可通过此章节查看是否有相关解决方法。", "breadcrumb": "问题排查", "bodyText": "若使用过程中，遇到连接、图像预览、条码识别与输出相关问题，您可通过此章节查看是否有相关解决方法。", "media": []}, {"guid": "GUID-F24A19BD-F61B-4E2E-AA94-9CCFE2D77086", "filename": "GUID-F24A19BD-F61B-4E2E-AA94-9CCFE2D77086.html", "title": "前言", "description": "本文档旨在帮助您正确使用产品，避免误操作可能导致的危险或资产损失。使用本产品之前，请阅读本文档并妥善保存，以备日后参考。", "breadcrumb": "前言", "bodyText": "本文档旨在帮助您正确使用产品，避免误操作可能导致的危险或资产损失。使用本产品之前，请阅读本文档并妥善保存，以备日后参考。", "media": [{"path": "GUID-7602967A-5146-48F0-9A53-0B2805FE5616-high.png", "type": "image"}]}, {"guid": "GUID-F29F09A1-B197-460B-9FAC-18C9A132264B", "filename": "GUID-F29F09A1-B197-460B-9FAC-18C9A132264B.html", "title": "触发设置", "description": "当需要根据外部信号或特定条件触发读码器进行图像采集和读码时，需在触发设置部分开启读码器触发模式、选择触发源并配置相关参数。", "breadcrumb": "读码器常用配置 > 配置输入/输出 > 输入 > 触发设置", "bodyText": "当需要根据外部信号或特定条件触发读码器进行图像采集和读码时，需在触发设置部分开启读码器触发模式、选择触发源并配置相关参数。", "media": [{"path": "GUID-29E56C42-BE87-4B9C-BF87-C1CBD63D7FD1-high.png", "type": "image"}, {"path": "GUID-3234B8FD-1D66-49F3-A51F-0FB83A77A4DA-high.png", "type": "image"}, {"path": "GUID-D6D44F6C-4947-445E-8576-E5B05A8F6EEC-high.png", "type": "image"}, {"path": "GUID-57770081-8379-41C4-9DC5-75299110D7F7-high.png", "type": "image"}, {"path": "GUID-ECAC2D8F-07A4-480D-9E53-680CDED921C7-high.png", "type": "image"}, {"path": "GUID-ECAC2D8F-07A4-480D-9E53-680CDED921C7-high.png", "type": "image"}, {"path": "GUID-ECAC2D8F-07A4-480D-9E53-680CDED921C7-high.png", "type": "image"}, {"path": "GUID-ECAC2D8F-07A4-480D-9E53-680CDED921C7-high.png", "type": "image"}]}, {"guid": "GUID-F3AB809B-5364-45D7-A6E6-172F562F6A1B", "filename": "GUID-F3AB809B-5364-45D7-A6E6-172F562F6A1B.html", "title": "排序", "description": "排序方式模块支持设置规则对条码数据进行排序，适用于需要对读取条码数据进行有序处理场景。", "breadcrumb": "读码器常用配置 > 处理输出数据 > 过滤排序 > 排序", "bodyText": "排序方式模块支持设置规则对条码数据进行排序，适用于需要对读取条码数据进行有序处理场景。", "media": []}, {"guid": "GUID-F74A5BAF-C981-4E13-969C-84E897422A28", "filename": "GUID-F74A5BAF-C981-4E13-969C-84E897422A28.html", "title": "正则表达式过滤", "description": "过滤规则模块支持设置正则表达式对条码进行复杂的匹配和过滤，例如条码中包含动态变化的部分或需要匹配多种格式的情况。", "breadcrumb": "读码器常用配置 > 处理输出数据 > 过滤排序 > 正则表达式过滤", "bodyText": "过滤规则模块支持设置正则表达式对条码进行复杂的匹配和过滤，例如条码中包含动态变化的部分或需要匹配多种格式的情况。", "media": [{"path": "GUID-612C6EE9-7E41-41D0-812C-7B95585EDCC3-high.png", "type": "image"}, {"path": "GUID-4715BD94-7A40-44D4-94DC-82C41AF2DFAC-high.png", "type": "image"}, {"path": "GUID-31C49A6B-62DB-4863-A8E4-105E9229410F-high.png", "type": "image"}, {"path": "GUID-315D94BF-C89B-48A7-B2E1-D4A8C6AC41E0-high.png", "type": "image"}, {"path": "GUID-54CCD948-0743-4104-8AAF-13ECCFC8CB26-high.png", "type": "image"}, {"path": "GUID-55E96AB9-9183-48A8-AE85-409510F44C35-high.png", "type": "image"}]}, {"guid": "GUID-FAC6A401-DE79-4C3F-8DDF-33D8B15A0561", "filename": "GUID-FAC6A401-DE79-4C3F-8DDF-33D8B15A0561.html", "title": "连接问题排查", "description": "本节介绍如何解决IDMVS连接读码器时遇到的异常情况。", "breadcrumb": "问题排查 > 连接问题排查", "bodyText": "本节介绍如何解决IDMVS连接读码器时遇到的异常情况。", "media": []}];
+const BASE_URL = 'https://raw.githubusercontent.com/chenze3303/idmvs/main/';
+let activeIndex = -1;
+
+function loadData() {
+  document.getElementById('searchStats').textContent = `共 ${DATA.length} 篇文档`;
+  renderResults(DATA, '');
+}
+
+function escapeHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function highlightText(text, query) {
+  if (!query) return escapeHtml(text);
+  const escaped = escapeHtml(text);
+  const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+  return escaped.replace(regex, '<mark>$1</mark>');
+}
+
+function search(query) {
+  if (!query.trim()) return DATA;
+  const q = query.toLowerCase();
+  return DATA
+    .map(item => {
+      let score = 0;
+      if (item.title.toLowerCase().includes(q)) score += 10;
+      if (item.description.toLowerCase().includes(q)) score += 5;
+      if (item.breadcrumb.toLowerCase().includes(q)) score += 3;
+      if (item.bodyText && item.bodyText.toLowerCase().includes(q)) score += 2;
+      return { ...item, score };
+    })
+    .filter(item => item.score > 0)
+    .sort((a, b) => b.score - a.score);
+}
+
+function renderResults(items, query) {
+  const panel = document.getElementById('resultsPanel');
+  
+  if (items.length === 0) {
+    panel.innerHTML = '<div style="text-align:center;color:#5a6d80;padding:40px;">未找到匹配的文档</div>';
+    document.getElementById('searchStats').textContent = '无结果';
+    return;
+  }
+  
+  document.getElementById('searchStats').textContent = `找到 ${items.length} 篇文档`;
+  
+  panel.innerHTML = items.map((item, i) => `
+    <div class="result-card${i === activeIndex ? ' active' : ''}" onclick="showDetail(${i}, '${query.replace(/'/g, "\\'")}')">
+      <div class="result-title">${highlightText(item.title, query)}</div>
+      ${item.breadcrumb ? `<div class="result-breadcrumb">📂 ${escapeHtml(item.breadcrumb)}</div>` : ''}
+      <div class="result-desc">${highlightText(item.description, query)}</div>
+      ${item.media && item.media.length > 0 ? `<div class="result-media-badge">🖼️ ${item.media.length} 个媒体文件</div>` : ''}
+    </div>
+  `).join('');
+}
+
+function showDetail(index, query) {
+  activeIndex = index;
+  const items = search(document.getElementById('searchInput').value);
+  const item = items[index];
+  if (!item) return;
+  
+  // Update active card
+  document.querySelectorAll('.result-card').forEach((el, i) => {
+    el.classList.toggle('active', i === index);
+  });
+  
+  const mediaHtml = item.media && item.media.length > 0 ? `
+    <div class="media-section">
+      <div class="media-section-title">🖼️ 相关截图 / 媒体 (${item.media.length})</div>
+      <div class="media-grid">
+        ${item.media.map(m => {
+          const url = BASE_URL + m.path;
+          if (m.type === 'video') {
+            return `<div class="media-item">
+              <video controls src="${url}"></video>
+              <div class="media-label">${escapeHtml(m.path)}</div>
+            </div>`;
+          }
+          return `<div class="media-item">
+            <img src="${url}" alt="${escapeHtml(m.path)}" loading="lazy" onclick="openLightbox('${url}')">
+            <div class="media-label">${escapeHtml(m.path)}</div>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>
+  ` : '';
+  
+  document.getElementById('detailPanel').innerHTML = `
+    ${item.breadcrumb ? `<div class="detail-breadcrumb">📂 ${escapeHtml(item.breadcrumb)}</div>` : ''}
+    <div class="detail-title">${highlightText(item.title, query)}</div>
+    <div class="detail-desc">${highlightText(item.description, query)}</div>
+    <a class="detail-link" href="https://github.com/chenze3303/idmvs/blob/main/${item.filename}" target="_blank">
+      🔗 在 GitHub 上查看原始文档
+    </a>
+    ${mediaHtml}
+  `;
+}
+
+function openLightbox(url) {
+  document.getElementById('lightboxImg').src = url;
+  document.getElementById('lightbox').classList.add('show');
+}
+
+// Search input handler
+let searchTimer;
+document.getElementById('searchInput').addEventListener('input', (e) => {
+  clearTimeout(searchTimer);
+  searchTimer = setTimeout(() => {
+    const query = e.target.value;
+    const results = search(query);
+    activeIndex = -1;
+    renderResults(results, query);
+    
+    // Auto-select first result
+    if (results.length > 0) {
+      showDetail(0, query);
+    } else {
+      document.getElementById('detailPanel').innerHTML = `
+        <div class="detail-empty">
+          <div class="detail-empty-icon">🔍</div>
+          <div class="detail-empty-text">未找到匹配的文档</div>
+        </div>
+      `;
+    }
+  }, 200);
+});
+
+// Keyboard shortcuts
+document.addEventListener('keydown', (e) => {
+  if (e.key === '/' && document.activeElement !== document.getElementById('searchInput')) {
+    e.preventDefault();
+    document.getElementById('searchInput').focus();
+  }
+  if (e.key === 'Escape') {
+    document.getElementById('lightbox').classList.remove('show');
+  }
+});
+
+loadData();
+</script>
+</body>
+</html>
